@@ -24,13 +24,13 @@ Run from the project root:
 | :----------------- | :---------------------------------------------------------------- |
 | `npm install`      | Install dependencies                                              |
 | `npm run dev`      | Start the dev server at `localhost:4321`                          |
-| `npm run build`    | Build the production site to `./dist/`                            |
+| `npm run build`    | Build the production site to `./public_html/`                     |
 | `npm run preview`  | Preview the built site locally                                    |
 | `npm run audit`    | QA crawl: overflow + dead-link check (needs `preview` running) ¹  |
 | `npm run gen:og`   | Regenerate the default OG share image (`public/og-default.png`)   |
 | `npm run agent:check` | Validate the shared agent adapters/rules/skills                |
 
-¹ `npm run audit [baseUrl]` derives every route from `dist/`, loads each at 320–1440px, and reports
+¹ `npm run audit [baseUrl]` derives every route from `public_html/`, loads each at 320–1440px, and reports
 unclipped horizontal overflow and any internal link that doesn't resolve. Build and start the
 preview first, then point it at that URL (e.g. `npm run audit http://localhost:4321`).
 

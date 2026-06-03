@@ -1,5 +1,5 @@
 /**
- * Static-site QA audit. Derives every built route from dist/, then crawls each
+ * Static-site QA audit. Derives every built route from public_html/, then crawls each
  * page across a range of widths and reports (1) horizontal overflow not clipped
  * by an ancestor and (2) internal links that don't resolve to a built route.
  *
@@ -12,15 +12,15 @@ import { join } from "node:path";
 
 const BASE = process.argv[2] || "http://localhost:4321";
 
-// Build the route set from dist/**/index.html (+ top-level *.html like 404).
-function routesFromDist(dir = "dist", prefix = "") {
+// Build the route set from public_html/**/index.html (+ top-level *.html like 404).
+function routesFromBuildOutput(dir = "public_html", prefix = "") {
   const routes = [];
   if (!existsSync(dir)) return routes;
   for (const e of readdirSync(dir, { withFileTypes: true })) {
     if (e.isDirectory()) {
       if (e.name === "pagefind" || e.name === "_astro") continue; // assets, not pages
       if (existsSync(join(dir, e.name, "index.html"))) routes.push(prefix + "/" + e.name);
-      routes.push(...routesFromDist(join(dir, e.name), prefix + "/" + e.name));
+      routes.push(...routesFromBuildOutput(join(dir, e.name), prefix + "/" + e.name));
     } else if (e.name === "index.html" && prefix === "") {
       routes.push("/");
     } else if (/\.(xml|txt)$/.test(e.name)) {
@@ -31,7 +31,7 @@ function routesFromDist(dir = "dist", prefix = "") {
   return routes;
 }
 
-const built = new Set(routesFromDist());
+const built = new Set(routesFromBuildOutput());
 // Viewport-test HTML pages only; XML/txt feeds are checked for resolution, not layout.
 const pages = [...built].filter((p) => !/\.(xml|txt)$/.test(p)).sort();
 const widths = [320, 360, 414, 768, 1024, 1280, 1440];

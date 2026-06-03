@@ -49,6 +49,7 @@ const warmDarkCodeTheme = {
 // https://astro.build/config
 export default defineConfig({
   site: SITE,
+  outDir: './public_html',
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   // Single warm-on-dark Shiki theme: code blocks stay dark in BOTH light and
   // dark mode (they don't switch), with syntax colors drawn from the brand
