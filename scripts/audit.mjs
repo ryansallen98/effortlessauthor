@@ -32,7 +32,8 @@ function routesFromDist(dir = "dist", prefix = "") {
 }
 
 const built = new Set(routesFromDist());
-const pages = [...built].sort();
+// Viewport-test HTML pages only; XML/txt feeds are checked for resolution, not layout.
+const pages = [...built].filter((p) => !/\.(xml|txt)$/.test(p)).sort();
 const widths = [320, 360, 414, 768, 1024, 1280, 1440];
 
 const browser = await chromium.launch({ channel: "chrome" });
