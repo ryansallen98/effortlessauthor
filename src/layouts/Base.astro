@@ -1,36 +1,106 @@
 ---
 import "../styles/global.css";
+
 interface Props {
   title?: string;
   description?: string;
+  image?: string; // path relative to site root, e.g. "/og-default.png"
+  jsonLd?: Record<string, unknown>[];
 }
 const {
   title = "EffortlessAuthor — KDP Authoring Studio",
   description = "A file-first authoring studio for Kindle-ready books. Keep every chapter, style guide, source, cover, and export in a transparent project folder — with a structured editor, KDP-aware validation, metadata prep, EPUB export, version history, and narrated audio from the same source of truth.",
+  image = "/og-default.png",
+  jsonLd = [],
 } = Astro.props;
+
+const site = Astro.site ?? new URL("https://effortlessauthor.com");
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL(image, site).href;
+const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
+
+// Default structured data present on every page.
+const baseJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "EffortlessAuthor",
+    url: site.href,
+    description,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "EffortlessAuthor",
+    url: site.href,
+    logo: new URL("/favicon.svg", site).href,
+  },
+];
+const structuredData = [...baseJsonLd, ...jsonLd];
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- No-flash theme: set the class before first paint -->
+    <script is:inline>
+      (() => {
+        try {
+          const t = localStorage.getItem("theme");
+          const dark = t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", dark);
+        } catch (_) {}
+      })();
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#D45F11" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&display=swap"
     />
+
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="EffortlessAuthor" />
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="EffortlessAuthor updates" href="/rss.xml" />
+
+    {structuredData.map((node) => (
+      <script type="application/ld+json" set:html={JSON.stringify(node)} />
+    ))}
+
+    {plausibleDomain && (
+      <script defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js"></script>
+    )}
   </head>
   <body class="min-h-screen bg-gradient-warm texture-grain">
+    <a
+      href="#main"
+      class="sr-only z-[100] rounded-md bg-card px-4 py-2 text-sm font-medium shadow-soft-lg focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+    >Skip to content</a>
     <slot />
   </body>
 </html>

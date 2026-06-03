@@ -27,11 +27,30 @@ Run from the project root:
 | `npm run build`    | Build the production site to `./dist/`                            |
 | `npm run preview`  | Preview the built site locally                                    |
 | `npm run audit`    | QA crawl: overflow + dead-link check (needs `preview` running) ¹  |
+| `npm run gen:og`   | Regenerate the default OG share image (`public/og-default.png`)   |
 | `npm run agent:check` | Validate the shared agent adapters/rules/skills                |
 
 ¹ `npm run audit [baseUrl]` derives every route from `dist/`, loads each at 320–1440px, and reports
 unclipped horizontal overflow and any internal link that doesn't resolve. Build and start the
 preview first, then point it at that URL (e.g. `npm run audit http://localhost:4321`).
+
+### Environment variables
+
+| Variable | Purpose |
+| :------- | :------ |
+| `SITE_URL` | Public base URL used for canonical tags, sitemap, RSS, and OG image URLs. Defaults to a placeholder — set it once the domain is chosen. |
+| `PUBLIC_PLAUSIBLE_DOMAIN` | When set, injects a [Plausible](https://plausible.io) analytics script for that domain. Unset = no analytics. |
+
+### Production features
+
+- **SEO:** per-page `<title>`/description, canonical URLs, Open Graph + Twitter cards (with a branded
+  `og-default.png`), JSON-LD (WebSite/Organization site-wide, SoftwareApplication on home,
+  TechArticle + breadcrumbs on docs), an auto sitemap (`@astrojs/sitemap`), and a dynamic `robots.txt`.
+- **Dark mode:** a header toggle backed by the app's `.dark` theme tokens, with a no-flash inline
+  init and `localStorage` persistence.
+- **Docs search:** full-text [Pagefind](https://pagefind.app) search in the docs hub (indexed at build).
+- **Changelog + RSS:** `/updates` (Markdown under `src/content/updates/`) with an `/rss.xml` feed.
+- **Polish:** hover prefetch, copy-code buttons in docs, a skip-to-content link, and `prefers-reduced-motion` support.
 
 ## Pages
 

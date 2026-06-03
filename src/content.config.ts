@@ -37,4 +37,14 @@ const docs = defineCollection({
   }),
 });
 
-export const collections = { legal, docs };
+const updates = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/updates" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.string(), // ISO date
+    tag: z.string().default("Update"),
+  }),
+});
+
+export const collections = { legal, docs, updates };

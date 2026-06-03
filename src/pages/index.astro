@@ -5,8 +5,21 @@ import Pillars from "../components/sections/Pillars.astro";
 import ProductSurface from "../components/sections/ProductSurface.astro";
 import UseCases from "../components/sections/UseCases.astro";
 import CTA from "../components/sections/CTA.astro";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "EffortlessAuthor",
+    applicationCategory: "BusinessApplication",
+    applicationSubCategory: "Authoring / Publishing",
+    operatingSystem: "Web",
+    description:
+      "A file-first authoring studio for Kindle/KDP-ready books: structured editor, KDP-aware validation, metadata prep, EPUB export, version history, and narrated audio.",
+  },
+];
 ---
-<PageLayout>
+<PageLayout jsonLd={jsonLd}>
   <Hero />
   <Pillars />
   <ProductSurface />

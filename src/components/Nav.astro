@@ -22,7 +22,16 @@ const isActive = (href: string) => path === href || (href !== "/" && path.starts
       ))}
     </nav>
 
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-2 sm:gap-3">
+      <button
+        type="button"
+        id="theme-toggle"
+        class="flex h-9 w-9 items-center justify-center rounded-md border border-input bg-background text-foreground transition-colors hover:bg-accent"
+        aria-label="Toggle dark mode"
+      >
+        <Icon name="sun" class="hidden h-4 w-4 dark:block" />
+        <Icon name="moon" class="h-4 w-4 dark:hidden" />
+      </button>
       <Button href="/early-access" variant="ghost" size="sm" class="hidden lg:inline-flex">Sign in</Button>
       <Button href="/early-access" variant="gradient" size="sm">Early access<Icon name="arrow-right" class="h-4 w-4" /></Button>
       <button
@@ -54,6 +63,13 @@ const isActive = (href: string) => path === href || (href !== "/" && path.starts
 </header>
 
 <script>
+  // Dark-mode toggle (no-flash init lives in Base.astro <head>).
+  const themeToggle = document.getElementById("theme-toggle");
+  themeToggle?.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.toggle("dark");
+    try { localStorage.setItem("theme", isDark ? "dark" : "light"); } catch (_) {}
+  });
+
   const toggle = document.getElementById("nav-toggle");
   const menu = document.getElementById("mobile-menu");
   if (toggle && menu) {

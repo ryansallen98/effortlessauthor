@@ -199,6 +199,32 @@
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
+/* ---- Copy-code buttons on docs code blocks --------------------------- */
+.prose .code-wrap { position: relative; }
+.prose .code-wrap > .copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: calc(var(--radius) - 4px);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  color: hsl(var(--muted-foreground));
+  padding: 0.2rem 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+}
+.prose .code-wrap:hover > .copy-btn,
+.prose .code-wrap > .copy-btn:focus-visible { opacity: 1; }
+.prose .code-wrap > .copy-btn:hover { color: hsl(var(--foreground)); }
+.prose .code-wrap > .copy-btn.copied { color: hsl(var(--emerald-600)); border-color: hsl(var(--emerald-600) / 0.4); }
+
 /* ---- Prose (Markdown content: legal pages + guides) ------------------- */
 .prose {
   color: hsl(var(--foreground) / 0.9);

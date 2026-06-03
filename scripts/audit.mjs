@@ -18,10 +18,14 @@ function routesFromDist(dir = "dist", prefix = "") {
   if (!existsSync(dir)) return routes;
   for (const e of readdirSync(dir, { withFileTypes: true })) {
     if (e.isDirectory()) {
+      if (e.name === "pagefind" || e.name === "_astro") continue; // assets, not pages
       if (existsSync(join(dir, e.name, "index.html"))) routes.push(prefix + "/" + e.name);
       routes.push(...routesFromDist(join(dir, e.name), prefix + "/" + e.name));
     } else if (e.name === "index.html" && prefix === "") {
       routes.push("/");
+    } else if (/\.(xml|txt)$/.test(e.name)) {
+      // standalone file routes (rss.xml, robots.txt, sitemap-*.xml)
+      routes.push(prefix + "/" + e.name);
     }
   }
   return routes;
