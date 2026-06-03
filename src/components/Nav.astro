@@ -2,28 +2,69 @@
 import BrandLockup from "./BrandLockup.astro";
 import Button from "./ui/Button.astro";
 import Icon from "./Icon.astro";
+import { primaryNav } from "../lib/nav";
 
-const links = [
-  { href: "#workflow", label: "Workflow" },
-  { href: "#product", label: "Product" },
-  { href: "#kdp", label: "KDP pipeline" },
-  { href: "#audio", label: "Audio" },
-  { href: "#use-cases", label: "Use cases" },
-];
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || (href !== "/" && path.startsWith(href));
 ---
 <header class="sticky top-0 z-50 border-b border-border/50 bg-card/70 backdrop-blur-md">
   <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
-    <a href="#top" class="flex items-center" aria-label="EffortlessAuthor home">
+    <a href="/" class="flex items-center" aria-label="EffortlessAuthor home">
       <BrandLockup size="sm" />
     </a>
-    <nav class="hidden items-center gap-8 md:flex">
-      {links.map((l) => (
-        <a href={l.href} class="text-[15px] font-medium text-muted-foreground transition-colors hover:text-foreground">{l.label}</a>
+
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
+      {primaryNav.map((l) => (
+        <a
+          href={l.href}
+          class:list={["text-[15px] font-medium transition-colors hover:text-foreground", isActive(l.href) ? "text-foreground" : "text-muted-foreground"]}
+        >{l.label}</a>
       ))}
     </nav>
+
     <div class="flex items-center gap-3">
-      <Button href="#early-access" variant="ghost" size="sm" class="hidden sm:inline-flex">Sign in</Button>
-      <Button href="#early-access" variant="gradient" size="sm">Early access<Icon name="arrow-right" class="h-4 w-4" /></Button>
+      <Button href="/early-access" variant="ghost" size="sm" class="hidden lg:inline-flex">Sign in</Button>
+      <Button href="/early-access" variant="gradient" size="sm">Early access<Icon name="arrow-right" class="h-4 w-4" /></Button>
+      <button
+        type="button"
+        id="nav-toggle"
+        class="flex h-9 w-9 items-center justify-center rounded-md border border-input bg-background text-foreground transition-colors hover:bg-accent lg:hidden"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <Icon name="menu" class="h-5 w-5" data-icon="menu" />
+        <Icon name="x" class="hidden h-5 w-5" data-icon="close" />
+      </button>
     </div>
   </div>
+
+  <!-- mobile menu -->
+  <div id="mobile-menu" class="hidden border-t border-border/50 bg-card/95 backdrop-blur-md lg:hidden">
+    <nav class="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4" aria-label="Mobile">
+      {primaryNav.map((l) => (
+        <a
+          href={l.href}
+          class:list={["rounded-md px-3 py-2.5 text-[15px] font-medium transition-colors hover:bg-accent", isActive(l.href) ? "bg-accent text-foreground" : "text-muted-foreground"]}
+        >{l.label}</a>
+      ))}
+      <Button href="/early-access" variant="outline" size="default" class="mt-2 w-full justify-center">Sign in</Button>
+    </nav>
+  </div>
 </header>
+
+<script>
+  const toggle = document.getElementById("nav-toggle");
+  const menu = document.getElementById("mobile-menu");
+  if (toggle && menu) {
+    const menuIcon = toggle.querySelector('[data-icon="menu"]');
+    const closeIcon = toggle.querySelector('[data-icon="close"]');
+    toggle.addEventListener("click", () => {
+      const open = menu.classList.toggle("hidden") === false;
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      menuIcon?.classList.toggle("hidden", open);
+      closeIcon?.classList.toggle("hidden", !open);
+    });
+  }
+</script>

@@ -1,0 +1,62 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import Workflow from "../components/sections/Workflow.astro";
+import KdpPipeline from "../components/sections/KdpPipeline.astro";
+import AiWorkflow from "../components/sections/AiWorkflow.astro";
+import AudioWorkflow from "../components/sections/AudioWorkflow.astro";
+import CTA from "../components/sections/CTA.astro";
+import Icon from "../components/Icon.astro";
+import Button from "../components/ui/Button.astro";
+
+const more = [
+  { icon: "history", title: "Version history", body: "SQLite-backed snapshots protect every edit — roll back without database lock-in." },
+  { icon: "library", title: "Series support", body: "Define a series and keep volume metadata coherent across every book." },
+  { icon: "book-marked", title: "Style guides", body: "A style.md per book keeps voice and conventions with the project." },
+  { icon: "file-code", title: "Custom CSS", body: "KDP-safe CSS overrides for fine control over the exported EPUB." },
+  { icon: "list-ordered", title: "Structure tools", body: "Front matter, chapters, back matter, and nested sections — reorder by drag." },
+  { icon: "shield-check", title: "Validation report", body: "A KDP-aware checklist flags what needs review before you upload." },
+];
+---
+<PageLayout
+  title="Features — EffortlessAuthor"
+  description="Everything in the file-first KDP authoring studio: structured editor, KDP-aware EPUB pipeline, metadata prep, version history, series support, and narrated audio."
+>
+  <PageHero
+    eyebrow="Features"
+    eyebrowIcon="layers"
+    title="The whole studio, surface by surface."
+    lead="From the first Markdown chapter to a KDP-ready EPUB and narrated audio — every part of the workflow lives in one transparent project."
+  >
+    <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+      <Button href="/early-access" variant="gradient" size="lg">Get early access<Icon name="arrow-right" class="h-4 w-4" /></Button>
+      <Button href="/resources" variant="outline" size="lg">Read the guides</Button>
+    </div>
+  </PageHero>
+
+  <Workflow />
+  <KdpPipeline />
+  <AiWorkflow />
+  <AudioWorkflow />
+
+  <!-- and more -->
+  <section class="relative z-10 py-20 lg:py-24">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="font-serif text-3xl font-bold tracking-tight sm:text-4xl">And the details that keep a book honest.</h2>
+        <p class="mt-4 text-lg text-muted-foreground">The studio is built from the same production-minded primitives you'd expect from real software.</p>
+      </div>
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {more.map((m) => (
+          <div class="flex h-full flex-col rounded-lg border border-border/60 bg-card/80 p-6 shadow-soft backdrop-blur-sm">
+            <span class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-orange-500/20 text-primary"><Icon name={m.icon} class="h-5 w-5" /></span>
+            <h3 class="font-serif text-lg font-semibold">{m.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{m.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</PageLayout>

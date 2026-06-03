@@ -1,27 +1,15 @@
 ---
-import Base from "../layouts/Base.astro";
-import Nav from "../components/Nav.astro";
+import PageLayout from "../layouts/PageLayout.astro";
 import Hero from "../components/sections/Hero.astro";
-import Workflow from "../components/sections/Workflow.astro";
+import Pillars from "../components/sections/Pillars.astro";
 import ProductSurface from "../components/sections/ProductSurface.astro";
-import KdpPipeline from "../components/sections/KdpPipeline.astro";
-import AiWorkflow from "../components/sections/AiWorkflow.astro";
-import AudioWorkflow from "../components/sections/AudioWorkflow.astro";
 import UseCases from "../components/sections/UseCases.astro";
 import CTA from "../components/sections/CTA.astro";
-import Footer from "../components/Footer.astro";
 ---
-<Base>
-  <Nav />
-  <main>
-    <Hero />
-    <Workflow />
-    <ProductSurface />
-    <KdpPipeline />
-    <AiWorkflow />
-    <AudioWorkflow />
-    <UseCases />
-    <CTA />
-  </main>
-  <Footer />
-</Base>
+<PageLayout>
+  <Hero />
+  <Pillars />
+  <ProductSurface />
+  <UseCases />
+  <CTA />
+</PageLayout>

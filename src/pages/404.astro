@@ -1,0 +1,23 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import Icon from "../components/Icon.astro";
+import Button from "../components/ui/Button.astro";
+---
+<PageLayout title="Page not found — EffortlessAuthor" description="The page you were looking for could not be found.">
+  <section class="relative z-10 flex min-h-[60vh] items-center justify-center px-6 py-24">
+    <div class="mx-auto max-w-lg text-center">
+      <span class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-orange-500/20 text-primary">
+        <Icon name="file-text" class="h-8 w-8" />
+      </span>
+      <p class="font-mono text-sm font-semibold text-primary">404</p>
+      <h1 class="mt-2 font-serif text-4xl font-bold tracking-tight">This page is off the shelf.</h1>
+      <p class="mx-auto mt-4 max-w-md text-lg text-muted-foreground">
+        We couldn't find that page. It may have moved, or never existed. Let's get you back to the studio.
+      </p>
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <Button href="/" variant="gradient" size="lg"><Icon name="arrow-left" class="h-4 w-4" />Back home</Button>
+        <Button href="/resources" variant="outline" size="lg">Browse the guides</Button>
+      </div>
+    </div>
+  </section>
+</PageLayout>

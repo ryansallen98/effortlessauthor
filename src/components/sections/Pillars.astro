@@ -1,0 +1,34 @@
+---
+import Icon from "../Icon.astro";
+import SectionHeading from "../SectionHeading.astro";
+import Button from "../ui/Button.astro";
+
+const pillars = [
+  { icon: "folder-open", title: "Own the manuscript", body: "Real Markdown files in a transparent project folder. Git-friendly, portable, and yours.", href: "/features#workflow" },
+  { icon: "shield-check", title: "Build for KDP", body: "A KDP-aware EPUB pipeline with strict XHTML, metadata prep, and a validation report.", href: "/features#kdp" },
+  { icon: "wand", title: "AI-assisted, in control", body: "Sources, style guide, and chapters as files keep AI drafts coherent and reviewable.", href: "/features#ai" },
+  { icon: "volume2", title: "Structured audio", body: "Chapter and full-book narration with voice casting and a review loop, from the same source.", href: "/features#audio" },
+];
+---
+<section class="relative z-10 py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <SectionHeading center eyebrow="Why EffortlessAuthor" eyebrowIcon="layers" title="Run a book like a real project.">
+      Four ideas hold the studio together. Each one is built on real files you can open, inspect, and trust.
+    </SectionHeading>
+
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {pillars.map((p) => (
+        <a href={p.href} class="group flex h-full flex-col rounded-lg border border-border/60 bg-card/80 p-6 shadow-soft backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-soft-lg">
+          <span class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-orange-500/20 text-primary"><Icon name={p.icon} class="h-5 w-5" /></span>
+          <h3 class="font-serif text-lg font-semibold">{p.title}</h3>
+          <p class="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+          <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary">Learn more<Icon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></span>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-10 flex justify-center">
+      <Button href="/features" variant="outline" size="lg">Explore all features<Icon name="arrow-right" class="h-4 w-4" /></Button>
+    </div>
+  </div>
+</section>

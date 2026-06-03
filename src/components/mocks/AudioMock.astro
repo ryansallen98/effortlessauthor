@@ -15,7 +15,7 @@ const chapters = [
   { n: "04", title: "The Second Key", status: "Not rendered", chars: "10,120 chars", review: false, ready: false },
 ];
 ---
-<div class="overflow-hidden rounded-lg border bg-card shadow-soft-lg" role="img" aria-label="Chapter audio render and review workflow">
+<div class="@container overflow-hidden rounded-lg border bg-card shadow-soft-lg" role="img" aria-label="Chapter audio render and review workflow">
   <!-- full book render bar -->
   <div class="flex flex-wrap items-center justify-between gap-3 border-b border-border/50 bg-card/60 px-4 py-3.5 backdrop-blur-md">
     <span class="flex items-center gap-2.5">
@@ -56,7 +56,7 @@ const chapters = [
           <span class="mt-0.5 block text-[11px] text-muted-foreground">{c.status} · {c.chars}</span>
         </span>
         {c.ready ? (
-          <span class="hidden h-1.5 w-20 overflow-hidden rounded-full bg-muted sm:block"><span class="block h-full w-2/5 bg-primary/60"></span></span>
+          <span class="hidden h-1.5 w-20 overflow-hidden rounded-full bg-muted @sm:block"><span class="block h-full w-2/5 bg-primary/60"></span></span>
         ) : null}
         {c.ready ? (
           <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary"><Icon name="play" class="h-3.5 w-3.5" /></span>

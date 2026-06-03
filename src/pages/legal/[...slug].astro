@@ -1,0 +1,55 @@
+---
+import { getCollection, render } from "astro:content";
+import PageLayout from "../../layouts/PageLayout.astro";
+import Icon from "../../components/Icon.astro";
+import { footerColumns } from "../../lib/nav";
+
+export async function getStaticPaths() {
+  const docs = await getCollection("legal");
+  return docs.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, description, updated } = entry.data;
+const updatedLabel = new Date(updated + "T00:00:00").toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const legalLinks = footerColumns.find((c) => c.title === "Legal")?.links ?? [];
+const norm = (s: string) => s.replace(/\/$/, "");
+const here = norm(Astro.url.pathname);
+---
+<PageLayout title={`${title} — EffortlessAuthor`} description={description}>
+  <article class="relative z-10">
+    <header class="border-b border-border/50">
+      <div class="mx-auto max-w-3xl px-6 py-14 lg:px-8 lg:py-16">
+        <h1 class="font-serif text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
+        <p class="mt-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+          <Icon name="clock" class="h-3.5 w-3.5" />Last updated {updatedLabel}
+        </p>
+      </div>
+    </header>
+
+    <div class="mx-auto grid max-w-5xl gap-12 px-6 py-12 lg:grid-cols-[12rem_1fr] lg:px-8">
+      <!-- side nav across legal docs -->
+      <nav class="hidden lg:block" aria-label="Legal documents">
+        <div class="sticky top-24 flex flex-col gap-1">
+          <span class="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Legal</span>
+          {legalLinks.map((l) => (
+            <a
+              href={l.href}
+              class:list={["rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent", here === norm(l.href) ? "bg-accent text-foreground" : "text-muted-foreground"]}
+            >{l.label}</a>
+          ))}
+        </div>
+      </nav>
+
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</PageLayout>

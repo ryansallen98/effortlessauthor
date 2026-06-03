@@ -1,0 +1,85 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import Icon from "../components/Icon.astro";
+import Button from "../components/ui/Button.astro";
+import CTA from "../components/sections/CTA.astro";
+
+const beliefs = [
+  { icon: "git-branch", title: "A book should be a repository, not a document.", body: "Manuscripts deserve the same durability as code: real files, clear structure, and history you can trust." },
+  { icon: "wand", title: "AI authors need production systems, not bigger prompts.", body: "Coherent books come from stable sources, style guides, and inspectable chapters — not from longer chat threads." },
+  { icon: "shield-check", title: "KDP formatting is software quality assurance.", body: "The last mile of self-publishing is operational. We treat export like a build: validated, repeatable, reviewable." },
+];
+---
+<PageLayout
+  title="About — EffortlessAuthor"
+  description="EffortlessAuthor is a file-first KDP authoring studio built on a simple belief: a book should behave like a real, durable project."
+>
+  <PageHero
+    eyebrow="About"
+    eyebrowIcon="feather"
+    title="Built for authors who treat books like projects."
+    lead="EffortlessAuthor is a file-first authoring studio for Kindle-ready books. We're building it in the open, for writers who care about control and production quality."
+  />
+
+  <!-- story -->
+  <section class="relative z-10 py-16 lg:py-20">
+    <div class="mx-auto max-w-3xl px-6 lg:px-8">
+      <div class="prose">
+        <p>
+          Most writing tools treat a book as a single opaque document — easy to start, hard to trust by the
+          time it reaches Kindle Direct Publishing. The manuscript is done, but the file isn't dependable:
+          formatting becomes a late-stage surprise, AI-assisted drafts scatter, and metadata, series, and
+          source files drift out of sync.
+        </p>
+        <p>
+          EffortlessAuthor takes the opposite approach. Every chapter is a real Markdown file in a transparent
+          project folder, beside its sources, style guide, cover, and exports. From that single source of
+          truth, the studio gives you a structured editor, KDP-aware validation, metadata preparation, EPUB
+          export, version history, and narrated audio.
+        </p>
+        <p>
+          It's an honest tool. We say <strong>KDP-aware</strong>, not "guaranteed approval." We prepare the
+          artifacts KDP expects and flag what needs review — then leave you in control of the final upload.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- beliefs -->
+  <section class="relative z-10 border-y border-border/50 bg-card/30 py-20 backdrop-blur-sm">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="font-serif text-3xl font-bold tracking-tight sm:text-4xl">What we believe</h2>
+      </div>
+      <div class="mt-12 grid gap-5 lg:grid-cols-3">
+        {beliefs.map((b) => (
+          <div class="flex h-full flex-col rounded-lg border border-border/60 bg-card/80 p-7 shadow-soft backdrop-blur-sm">
+            <span class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-orange-500/20 text-primary"><Icon name={b.icon} class="h-5 w-5" /></span>
+            <h3 class="font-serif text-lg font-semibold leading-snug">{b.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{b.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- naming note -->
+  <section class="relative z-10 py-16 lg:py-20">
+    <div class="mx-auto max-w-3xl px-6 lg:px-8">
+      <div class="rounded-xl border border-border/60 bg-card/70 p-7 shadow-soft backdrop-blur-sm">
+        <h2 class="flex items-center gap-2 font-serif text-xl font-semibold"><Icon name="info" class="h-5 w-5 text-primary" />A note on our name</h2>
+        <p class="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+          We're still finalizing the public brand — you may see this product as <strong class="text-foreground">EffortlessAuthor</strong>
+          or <strong class="text-foreground">EasyEnochian</strong> as we approach launch. The studio and its
+          file-first principles stay the same either way. Join early access and you'll be the first to know.
+        </p>
+        <div class="mt-5">
+          <Button href="/early-access" variant="gradient" size="default">Join early access<Icon name="arrow-right" class="h-4 w-4" /></Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</PageLayout>

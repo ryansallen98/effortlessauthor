@@ -1,0 +1,108 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import Icon from "../components/Icon.astro";
+import Button from "../components/ui/Button.astro";
+import Input from "../components/ui/Input.astro";
+import Label from "../components/ui/Label.astro";
+import Textarea from "../components/ui/Textarea.astro";
+import Badge from "../components/ui/Badge.astro";
+
+const perks = [
+  { icon: "zap", title: "First access", body: "Be among the first to use the studio as it's built." },
+  { icon: "mail", title: "Launch updates", body: "Occasional, no-noise updates on progress and the public brand decision." },
+  { icon: "target", title: "Shape the roadmap", body: "Tell us what your book workflow needs — we're listening early." },
+];
+
+const faqs = [
+  { q: "Is there pricing yet?", a: "Not yet. Early access is free while we build. We'll share pricing well before any paid launch." },
+  { q: "Does EffortlessAuthor guarantee KDP approval?", a: "No. The studio is KDP-aware: it prepares the artifacts KDP expects and runs a validation report, but final acceptance is always up to Amazon and you." },
+  { q: "Where do my files live?", a: "Your manuscript is file-first — chapters, sources, style guide, cover, and exports live in a transparent project folder you own." },
+  { q: "What about the name?", a: "The public brand (EffortlessAuthor or EasyEnochian) isn't finalized. Early-access members hear first." },
+];
+---
+<PageLayout
+  title="Early access — EffortlessAuthor"
+  description="Join the early access list for EffortlessAuthor, the file-first KDP authoring studio, or request a walkthrough demo."
+>
+  <PageHero
+    eyebrow="Early access"
+    eyebrowIcon="sparkles"
+    title="Get early access to the studio."
+    lead="We're building EffortlessAuthor in the open. Join the list for launch updates and early access — no pricing or commitment yet."
+  />
+
+  <!-- waitlist -->
+  <section class="relative z-10 py-16 lg:py-20">
+    <div class="mx-auto max-w-5xl px-6 lg:px-8">
+      <div class="grid items-start gap-10 lg:grid-cols-[1fr_1fr] lg:gap-14">
+        <div>
+          <div class="flex flex-col gap-5">
+            {perks.map((p) => (
+              <div class="flex gap-4">
+                <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-orange-500/20 text-primary"><Icon name={p.icon} class="h-5 w-5" /></span>
+                <div>
+                  <h3 class="font-serif text-base font-semibold">{p.title}</h3>
+                  <p class="mt-1 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p class="mt-6 text-xs text-muted-foreground">
+            By joining you agree to our <a href="/legal/privacy" class="font-medium text-primary underline-offset-4 hover:underline">Privacy Policy</a>. We'll only email you about EffortlessAuthor.
+          </p>
+        </div>
+
+        <form class="flex flex-col gap-3 rounded-xl border border-border/50 bg-background/60 p-6 shadow-inner-soft sm:p-8" onsubmit="return false">
+          <Badge variant="outline" class="mb-1 self-start"><span class="h-2 w-2 rounded-full bg-emerald-500"></span>Join the list</Badge>
+          <Label for="ea-name">Name</Label>
+          <Input id="ea-name" name="name" placeholder="Your name" class="h-11 border-border/50 bg-background/50 focus:border-primary/50" />
+          <Label for="ea-email" class="mt-1">Email</Label>
+          <Input id="ea-email" type="email" name="email" placeholder="you@example.com" class="h-11 border-border/50 bg-background/50 focus:border-primary/50" />
+          <Button type="submit" variant="gradient" size="lg" class="mt-3 w-full">Get early access<Icon name="arrow-right" class="h-4 w-4" /></Button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- demo -->
+  <section id="demo" class="relative z-10 scroll-mt-20 border-y border-border/50 bg-card/30 py-16 backdrop-blur-sm lg:py-20">
+    <div class="mx-auto max-w-5xl px-6 lg:px-8">
+      <div class="grid items-start gap-10 lg:grid-cols-[1fr_1fr] lg:gap-14">
+        <div>
+          <Badge variant="primary" class="mb-4"><Icon name="eye" class="h-3.5 w-3.5" />Request a demo</Badge>
+          <h2 class="font-serif text-3xl font-bold tracking-tight sm:text-4xl">Prefer a walkthrough?</h2>
+          <p class="mt-4 text-lg text-muted-foreground">
+            Tell us a little about your books and we'll show you how the file-first workflow handles structure,
+            KDP-aware export, and audio.
+          </p>
+        </div>
+        <form class="flex flex-col gap-3 rounded-xl border border-border/50 bg-background/60 p-6 shadow-inner-soft sm:p-8" onsubmit="return false">
+          <Label for="d-email">Work email</Label>
+          <Input id="d-email" type="email" name="email" placeholder="you@example.com" class="h-11 border-border/50 bg-background/50 focus:border-primary/50" />
+          <Label for="d-about" class="mt-1">What are you working on?</Label>
+          <Textarea id="d-about" name="about" rows="4" placeholder="A nonfiction series, a technical book, an AI-assisted draft pipeline…" class="border-border/50 bg-background/50 focus:border-primary/50"></Textarea>
+          <Button type="submit" variant="gradient" size="lg" class="mt-3 w-full">Request demo<Icon name="arrow-right" class="h-4 w-4" /></Button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- faq -->
+  <section class="relative z-10 py-16 lg:py-20">
+    <div class="mx-auto max-w-3xl px-6 lg:px-8">
+      <h2 class="text-center font-serif text-3xl font-bold tracking-tight sm:text-4xl">Questions, answered</h2>
+      <div class="mt-10 flex flex-col gap-3">
+        {faqs.map((f) => (
+          <details class="group rounded-lg border border-border/60 bg-card/80 px-5 shadow-soft backdrop-blur-sm">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-serif text-lg font-semibold marker:content-none">
+              {f.q}
+              <Icon name="chevron-down" class="h-5 w-5 flex-shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+            </summary>
+            <p class="pb-5 text-[15px] leading-relaxed text-muted-foreground">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>
