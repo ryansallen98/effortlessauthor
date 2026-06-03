@@ -18,12 +18,12 @@ export const footerColumns = [
     ],
   },
   {
-    title: "Resources",
+    title: "Docs",
     links: [
-      { href: "/resources", label: "All guides" },
-      { href: "/resources/markdown-to-kdp-epub", label: "Markdown to KDP EPUB" },
-      { href: "/resources/structure-a-nonfiction-book", label: "Structure a nonfiction book" },
-      { href: "/resources/nav-xhtml-vs-toc-ncx", label: "nav.xhtml vs toc.ncx" },
+      { href: "/resources", label: "All docs" },
+      { href: "/resources/quick-start", label: "Quick start" },
+      { href: "/resources/kdp-metadata", label: "KDP metadata" },
+      { href: "/resources/api-overview", label: "API reference" },
     ],
   },
   {

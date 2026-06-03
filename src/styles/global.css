@@ -120,7 +120,6 @@
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
     font-family: var(--font-sans);
-    overflow-x: clip; /* safety net against incidental horizontal overflow */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
@@ -206,7 +205,12 @@
   font-size: 1.0625rem;
   line-height: 1.75;
   max-width: 44rem;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
+/* Long unbreakable tokens (API paths, file paths) must wrap, not overflow. */
+.prose h1, .prose h2, .prose h3, .prose h4 { overflow-wrap: anywhere; }
+.prose :not(pre) > code { overflow-wrap: anywhere; }
 .prose > * + * { margin-top: 1.15rem; }
 .prose h2, .prose h3, .prose h4 {
   font-family: var(--font-serif);
@@ -257,7 +261,9 @@
 }
 .prose pre code { background: transparent; padding: 0; font-size: inherit; }
 .prose hr { border: 0; border-top: 1px solid hsl(var(--border)); margin: 2.5rem 0; }
-.prose table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+/* Tables scroll horizontally on narrow screens instead of overflowing. */
+.prose table { display: block; width: 100%; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 0.95rem; }
+.prose thead, .prose tbody { white-space: nowrap; }
 .prose th, .prose td { border: 1px solid hsl(var(--border)); padding: 0.5rem 0.75rem; text-align: left; }
 .prose th { background: hsl(var(--muted) / 0.5); font-weight: 600; }
 .prose img { border-radius: var(--radius); border: 1px solid hsl(var(--border)); }

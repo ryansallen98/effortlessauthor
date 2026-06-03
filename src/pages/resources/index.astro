@@ -3,44 +3,57 @@ import { getCollection } from "astro:content";
 import PageLayout from "../../layouts/PageLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 import Icon from "../../components/Icon.astro";
+import Button from "../../components/ui/Button.astro";
 import Badge from "../../components/ui/Badge.astro";
-import CTA from "../../components/sections/CTA.astro";
+import { groupDocs, docHref } from "../../lib/docs";
 
-const guides = (await getCollection("guides")).sort(
-  (a, b) => a.data.order - b.data.order,
-);
+const groups = groupDocs(await getCollection("docs"));
+const firstDoc = groups[0]?.items[0];
 ---
 <PageLayout
-  title="Resources — EffortlessAuthor"
-  description="Practical guides on Markdown-to-KDP EPUB workflows, structuring nonfiction books, EPUB navigation, and keeping a manuscript in Git."
+  title="Docs & Resources — EffortlessAuthor"
+  description="Documentation for the file-first KDP authoring studio: getting started, how-to guides, explainers, and the local API reference."
 >
   <PageHero
-    eyebrow="Resources"
+    eyebrow="Documentation"
     eyebrowIcon="book-open"
-    title="Guides for file-first authors."
-    lead="Practical, production-minded writing on KDP formatting, EPUB internals, and treating a book like a project you can version."
-  />
+    title="Everything you need to ship a book."
+    lead="Guides, explainers, and an API reference for EffortlessAuthor — the file-first KDP authoring studio. Start with the basics or jump straight to a task."
+  >
+    <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+      {firstDoc && <Button href={docHref(firstDoc)} variant="gradient" size="lg">Start reading<Icon name="arrow-right" class="h-4 w-4" /></Button>}
+      <Button href="/resources/api-overview" variant="outline" size="lg"><Icon name="file-code" class="h-4 w-4" />API reference</Button>
+    </div>
+  </PageHero>
 
   <section class="relative z-10 py-16 lg:py-20">
-    <div class="mx-auto max-w-5xl px-6 lg:px-8">
-      <div class="grid gap-5 sm:grid-cols-2">
-        {guides.map((g) => (
-          <a
-            href={`/resources/${g.id}`}
-            class="group flex h-full flex-col rounded-lg border border-border/60 bg-card/80 p-6 shadow-soft backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-soft-lg"
-          >
-            <div class="mb-4 flex items-center justify-between gap-3">
-              <Badge variant="primary">{g.data.category}</Badge>
-              <span class="inline-flex items-center gap-1.5 text-xs text-muted-foreground"><Icon name="clock" class="h-3.5 w-3.5" />{g.data.readingTime}</span>
+    <div class="mx-auto max-w-6xl px-6 lg:px-8">
+      <div class="grid gap-6 md:grid-cols-2">
+        {groups.map((g) => (
+          <div class="flex min-w-0 flex-col rounded-xl border border-border/60 bg-card/70 p-6 shadow-soft backdrop-blur-sm">
+            <div class="flex items-center gap-3">
+              <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-orange-500/20 text-primary"><Icon name={g.icon} class="h-5 w-5" /></span>
+              <div class="min-w-0">
+                <h2 class="font-serif text-xl font-semibold leading-tight">{g.name}</h2>
+                <p class="text-sm text-muted-foreground">{g.blurb}</p>
+              </div>
             </div>
-            <h2 class="font-serif text-xl font-semibold leading-snug">{g.data.title}</h2>
-            <p class="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{g.data.description}</p>
-            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary">Read guide<Icon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></span>
-          </a>
+            <ul class="mt-5 flex flex-col gap-1 border-t border-border/50 pt-4">
+              {g.items.map((d) => (
+                <li>
+                  <a href={docHref(d)} class="group flex items-center justify-between gap-3 rounded-md px-3 py-2 transition-colors hover:bg-accent">
+                    <span class="min-w-0 flex-1">
+                      <span class="block truncate text-sm font-medium">{d.data.title}</span>
+                      <span class="block truncate text-xs text-muted-foreground">{d.data.description}</span>
+                    </span>
+                    <Icon name="arrow-right" class="h-4 w-4 flex-shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
       </div>
     </div>
   </section>
-
-  <CTA />
 </PageLayout>

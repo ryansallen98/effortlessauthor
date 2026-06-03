@@ -1,10 +1,10 @@
 ---
 title: "Markdown to KDP EPUB: a file-first workflow"
 description: "A practical, file-first path from Markdown chapters to a clean, KDP-oriented EPUB you can validate, inspect, and re-export anytime."
-category: "Workflow"
+section: "Explainers"
+order: 3
 readingTime: "7 min read"
-publishDate: "2026-03-04"
-order: 1
+updated: "2026-06-03"
 ---
 
 Most authoring tools hide your book inside a proprietary database or a single opaque file. A file-first workflow flips that around: your manuscript is a folder of plain Markdown files that you can read, search, diff, and back up like any other source code. When it's time to publish, those files compile into a KDP-oriented EPUB. This guide walks through the whole path, from a blank draft to an export you can upload to Kindle Direct Publishing.

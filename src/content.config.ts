@@ -3,29 +3,38 @@ import { glob } from "astro/loaders";
 
 /**
  * Markdown-editable content collections.
- * Policy/legal pages and resource guides live as plain Markdown files under
- * src/content/** and are rendered by their respective dynamic routes.
+ * - legal: policy pages (privacy/terms/cookies)
+ * - docs:  the Resources documentation hub (Getting Started, Guides,
+ *          Explainers, API Reference) rendered with the docs layout.
+ * Add or edit a page by dropping a Markdown file with the right frontmatter.
  */
 const legal = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/legal" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    updated: z.string(), // ISO date, e.g. "2026-06-03"
+    updated: z.string(),
     order: z.number().default(0),
   }),
 });
 
-const guides = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/guides" }),
+export const DOC_SECTIONS = [
+  "Getting Started",
+  "Guides",
+  "Explainers",
+  "API Reference",
+] as const;
+
+const docs = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/docs" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    category: z.string().default("Guide"),
-    readingTime: z.string().default("5 min read"),
-    publishDate: z.string(), // ISO date
+    section: z.enum(DOC_SECTIONS),
     order: z.number().default(0),
+    readingTime: z.string().optional(),
+    updated: z.string().optional(),
   }),
 });
 
-export const collections = { legal, guides };
+export const collections = { legal, docs };

@@ -1,0 +1,172 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "./PageLayout.astro";
+import Icon from "../components/Icon.astro";
+import Badge from "../components/ui/Badge.astro";
+import { groupDocs, sortDocs, docHref, type DocEntry } from "../lib/docs";
+
+interface Props {
+  entry: DocEntry;
+  headings: { depth: number; slug: string; text: string }[];
+}
+const { entry, headings } = Astro.props;
+
+const all = await getCollection("docs");
+const groups = groupDocs(all);
+const flat = sortDocs(all);
+const i = flat.findIndex((d) => d.id === entry.id);
+const prev = i > 0 ? flat[i - 1] : null;
+const next = i < flat.length - 1 ? flat[i + 1] : null;
+
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const here = docHref(entry);
+const { title, description, section, readingTime } = entry.data;
+---
+<PageLayout title={`${title} — EffortlessAuthor Docs`} description={description}>
+  <div class="mx-auto w-full max-w-[88rem] px-6 lg:px-8">
+    <div class="lg:grid lg:grid-cols-[15rem_1fr] lg:gap-10 xl:grid-cols-[15rem_1fr_14rem] xl:gap-12">
+      <!-- ===== Sidebar (desktop) ===== -->
+      <aside class="hidden lg:block">
+        <div class="sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto py-10 pr-2">
+          <nav aria-label="Documentation">
+            {groups.map((g) => (
+              <div class="mb-6">
+                <p class="mb-2 flex items-center gap-2 px-3 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                  <Icon name={g.icon} class="h-3.5 w-3.5" />{g.name}
+                </p>
+                <ul class="flex flex-col gap-0.5">
+                  {g.items.map((d) => (
+                    <li>
+                      <a
+                        href={docHref(d)}
+                        aria-current={d.id === entry.id ? "page" : undefined}
+                        class:list={[
+                          "block rounded-md px-3 py-1.5 text-sm transition-colors",
+                          d.id === entry.id
+                            ? "bg-primary/10 font-semibold text-primary"
+                            : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                        ]}
+                      >{d.data.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
+        </div>
+      </aside>
+
+      <!-- ===== Main content ===== -->
+      <article class="min-w-0 py-10">
+        <!-- breadcrumb -->
+        <nav class="flex items-center gap-1.5 text-sm text-muted-foreground" aria-label="Breadcrumb">
+          <a href="/resources" class="transition-colors hover:text-foreground">Docs</a>
+          <Icon name="chevron-right" class="h-3.5 w-3.5" />
+          <span>{section}</span>
+        </nav>
+
+        <!-- mobile docs menu -->
+        <details class="group mt-4 rounded-lg border border-border/60 bg-card/80 lg:hidden">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 text-sm font-semibold marker:content-none">
+            <span class="flex items-center gap-2"><Icon name="menu" class="h-4 w-4" />Browse docs</span>
+            <Icon name="chevron-down" class="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-180" />
+          </summary>
+          <div class="border-t border-border/50 px-2 py-3">
+            {groups.map((g) => (
+              <div class="mb-3">
+                <p class="mb-1 flex items-center gap-2 px-3 text-xs font-bold uppercase tracking-wide text-muted-foreground"><Icon name={g.icon} class="h-3.5 w-3.5" />{g.name}</p>
+                <ul class="flex flex-col gap-0.5">
+                  {g.items.map((d) => (
+                    <li><a href={docHref(d)} class:list={["block rounded-md px-3 py-1.5 text-sm", d.id === entry.id ? "bg-primary/10 font-semibold text-primary" : "text-muted-foreground"]}>{d.data.title}</a></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </details>
+
+        <!-- header -->
+        <header class="mt-6 border-b border-border/50 pb-8">
+          <div class="flex flex-wrap items-center gap-3">
+            <Badge variant="primary">{section}</Badge>
+            {readingTime && <span class="inline-flex items-center gap-1.5 text-xs text-muted-foreground"><Icon name="clock" class="h-3.5 w-3.5" />{readingTime}</span>}
+          </div>
+          <h1 class="mt-4 font-serif text-4xl font-bold tracking-tight">{title}</h1>
+          <p class="mt-3 text-lg text-muted-foreground">{description}</p>
+        </header>
+
+        <!-- markdown body -->
+        <div class="prose mt-8 max-w-none">
+          <slot />
+        </div>
+
+        <!-- prev / next -->
+        <nav class="mt-12 grid gap-4 border-t border-border/50 pt-8 sm:grid-cols-2">
+          {prev ? (
+            <a href={docHref(prev)} class="group flex flex-col rounded-lg border border-border/60 bg-card/80 p-4 transition-all hover:border-primary/30 hover:shadow-soft">
+              <span class="inline-flex items-center gap-1.5 text-xs text-muted-foreground"><Icon name="arrow-left" class="h-3.5 w-3.5" />Previous</span>
+              <span class="mt-1 font-serif font-semibold text-foreground group-hover:text-primary">{prev.data.title}</span>
+            </a>
+          ) : <span></span>}
+          {next && (
+            <a href={docHref(next)} class="group flex flex-col rounded-lg border border-border/60 bg-card/80 p-4 text-right transition-all hover:border-primary/30 hover:shadow-soft sm:col-start-2">
+              <span class="inline-flex items-center justify-end gap-1.5 text-xs text-muted-foreground">Next<Icon name="arrow-right" class="h-3.5 w-3.5" /></span>
+              <span class="mt-1 font-serif font-semibold text-foreground group-hover:text-primary">{next.data.title}</span>
+            </a>
+          )}
+        </nav>
+      </article>
+
+      <!-- ===== On this page (TOC) ===== -->
+      <aside class="hidden xl:block">
+        <div class="sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto py-10">
+          {toc.length > 0 && (
+            <nav aria-label="On this page" id="toc">
+              <p class="mb-3 text-xs font-bold uppercase tracking-wide text-muted-foreground">On this page</p>
+              <ul class="flex flex-col gap-1 border-l border-border/60 text-sm">
+                {toc.map((h) => (
+                  <li>
+                    <a
+                      href={`#${h.slug}`}
+                      data-toc={h.slug}
+                      class:list={[
+                        "-ml-px block border-l-2 border-transparent py-1 text-muted-foreground transition-colors hover:text-foreground",
+                        h.depth === 3 ? "pl-6" : "pl-4",
+                      ]}
+                    >{h.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
+        </div>
+      </aside>
+    </div>
+  </div>
+</PageLayout>
+
+<script>
+  // TOC scrollspy: highlight the heading currently in view.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>("[data-toc]")];
+  if (links.length) {
+    const activeClasses = ["border-primary", "text-foreground", "font-medium"];
+    const setActive = (id: string) => {
+      for (const l of links) {
+        const on = l.dataset.toc === id;
+        l.classList.toggle("border-transparent", !on);
+        for (const c of activeClasses) l.classList.toggle(c, on);
+      }
+    };
+    const headings = links
+      .map((l) => document.getElementById(l.dataset.toc!))
+      .filter((el): el is HTMLElement => !!el);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length) setActive(visible[0].target.id);
+      },
+      { rootMargin: "-80px 0px -70% 0px", threshold: 0 },
+    );
+    headings.forEach((h) => observer.observe(h));
+  }
+</script>

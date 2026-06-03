@@ -1,70 +1,15 @@
 ---
 import { getCollection, render } from "astro:content";
-import PageLayout from "../../layouts/PageLayout.astro";
-import Icon from "../../components/Icon.astro";
-import Badge from "../../components/ui/Badge.astro";
-import Button from "../../components/ui/Button.astro";
+import DocsLayout from "../../layouts/DocsLayout.astro";
 
 export async function getStaticPaths() {
-  const guides = await getCollection("guides");
-  return guides.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+  const docs = await getCollection("docs");
+  return docs.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
-const { title, description, category, readingTime, publishDate } = entry.data;
-const dateLabel = new Date(publishDate + "T00:00:00").toLocaleDateString("en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
-
-const related = (await getCollection("guides"))
-  .filter((g) => g.id !== entry.id)
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 2);
+const { Content, headings } = await render(entry);
 ---
-<PageLayout title={`${title} — EffortlessAuthor`} description={description}>
-  <article class="relative z-10">
-    <header class="border-b border-border/50">
-      <div class="mx-auto max-w-3xl px-6 py-14 lg:px-8 lg:py-16">
-        <a href="/resources" class="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
-          <Icon name="arrow-left" class="h-4 w-4" />All guides
-        </a>
-        <div class="mt-6 flex items-center gap-3">
-          <Badge variant="primary">{category}</Badge>
-          <span class="inline-flex items-center gap-1.5 text-xs text-muted-foreground"><Icon name="clock" class="h-3.5 w-3.5" />{readingTime}</span>
-          <span class="inline-flex items-center gap-1.5 text-xs text-muted-foreground"><Icon name="calendar" class="h-3.5 w-3.5" />{dateLabel}</span>
-        </div>
-        <h1 class="mt-4 font-serif text-4xl font-bold tracking-tight sm:text-[2.75rem] sm:leading-[1.1]">{title}</h1>
-        <p class="mt-4 text-lg text-muted-foreground">{description}</p>
-      </div>
-    </header>
-
-    <div class="mx-auto max-w-3xl px-6 py-12 lg:px-8">
-      <div class="prose">
-        <Content />
-      </div>
-    </div>
-  </article>
-
-  <!-- related -->
-  <section class="relative z-10 border-t border-border/50 py-14">
-    <div class="mx-auto max-w-5xl px-6 lg:px-8">
-      <h2 class="font-serif text-2xl font-semibold">Keep reading</h2>
-      <div class="mt-6 grid gap-5 sm:grid-cols-2">
-        {related.map((g) => (
-          <a href={`/resources/${g.id}`} class="group flex h-full flex-col rounded-lg border border-border/60 bg-card/80 p-6 shadow-soft backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-soft-lg">
-            <Badge variant="primary" class="mb-3 self-start">{g.data.category}</Badge>
-            <h3 class="font-serif text-lg font-semibold leading-snug">{g.data.title}</h3>
-            <p class="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{g.data.description}</p>
-            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary">Read guide<Icon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></span>
-          </a>
-        ))}
-      </div>
-      <div class="mt-10">
-        <Button href="/early-access" variant="gradient" size="lg">Join the early access list<Icon name="arrow-right" class="h-4 w-4" /></Button>
-      </div>
-    </div>
-  </section>
-</PageLayout>
+<DocsLayout entry={entry} headings={headings}>
+  <Content />
+</DocsLayout>

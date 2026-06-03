@@ -1,10 +1,10 @@
 ---
 title: "EPUB navigation: nav.xhtml vs toc.ncx"
 description: "Understand EPUB 3 nav.xhtml and the legacy EPUB 2 toc.ncx, why including both improves compatibility, and how clean navigation matters for KDP."
-category: "EPUB"
+section: "Explainers"
+order: 5
 readingTime: "6 min read"
-publishDate: "2026-04-15"
-order: 3
+updated: "2026-06-03"
 ---
 
 Open any EPUB and you'll find a navigation document: the structured table of contents that powers the "Contents" menu on an e-reader. There are two versions of this file, born of two EPUB eras, and the difference confuses a lot of authors. This guide explains EPUB 3's `nav.xhtml` and the legacy EPUB 2 `toc.ncx`, why a robust book usually ships both, and why clean navigation matters when you upload to KDP.

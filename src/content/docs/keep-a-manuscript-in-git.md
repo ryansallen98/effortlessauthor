@@ -1,10 +1,10 @@
 ---
 title: "How to keep a book manuscript in Git"
 description: "Why a book benefits from version control, what to track versus ignore, plus a .gitignore, branching tips, and how plain Markdown makes diffs meaningful."
-category: "Version Control"
+section: "Explainers"
+order: 6
 readingTime: "7 min read"
-publishDate: "2026-05-06"
-order: 4
+updated: "2026-06-03"
 ---
 
 A book should be a repository, not a document. That single shift, from one fragile file to a versioned project, changes how safely and confidently you can write. Git, the version control system that runs most of the software world, works beautifully for manuscripts too, as long as your book is made of plain text. This guide covers why version control suits books, what to track versus ignore, and the handful of commands you'll actually use.

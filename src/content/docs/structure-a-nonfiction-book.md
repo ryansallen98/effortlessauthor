@@ -1,10 +1,10 @@
 ---
 title: "How to structure a nonfiction book for KDP"
 description: "A practical blueprint for front matter, chapters, back matter, file ordering, and KDP metadata so your nonfiction book is clear and upload-ready."
-category: "KDP"
+section: "Explainers"
+order: 4
 readingTime: "8 min read"
-publishDate: "2026-03-25"
-order: 2
+updated: "2026-06-03"
 ---
 
 A nonfiction book lives or dies on structure. Readers skim, jump to the parts they need, and judge credibility in the first few pages. Kindle Direct Publishing, meanwhile, expects clean navigation and well-formed metadata. The good news is that one solid structure satisfies both audiences. This guide lays out a dependable shape for a nonfiction book and the KDP metadata that surrounds it.
