@@ -225,25 +225,10 @@
 .prose .code-wrap > .copy-btn:hover { color: hsl(var(--foreground)); }
 .prose .code-wrap > .copy-btn.copied { color: hsl(var(--emerald-600)); border-color: hsl(var(--emerald-600) / 0.4); }
 
-/* ---- Code highlighting (Shiki css-variables → warm palette) ----------- */
+/* ---- Code surface — always dark (both light & dark mode) -------------- */
 :root {
-  --astro-code-color-text: hsl(var(--foreground));
-  --astro-code-color-background: hsl(var(--card));
-  --astro-code-token-comment: hsl(var(--muted-foreground));
-  --astro-code-token-punctuation: hsl(var(--muted-foreground));
-  --astro-code-token-keyword: hsl(var(--primary));
-  --astro-code-token-link: hsl(var(--primary));
-  --astro-code-token-constant: hsl(var(--orange-600));
-  --astro-code-token-function: hsl(var(--amber-600));
-  --astro-code-token-parameter: hsl(var(--foreground));
-  --astro-code-token-string: hsl(var(--emerald-600));
-  --astro-code-token-string-expression: hsl(var(--emerald-600));
-}
-.dark {
-  --astro-code-token-constant: hsl(var(--orange-500));
-  --astro-code-token-function: hsl(var(--amber-500));
-  --astro-code-token-string: hsl(var(--emerald-500));
-  --astro-code-token-string-expression: hsl(var(--emerald-500));
+  --code-bg: 30 15% 8%;   /* dark --background token */
+  --code-fg: 35 20% 95%;  /* dark --foreground token */
 }
 
 /* ---- Prose (Markdown content: legal pages + guides) ------------------- */
@@ -292,21 +277,22 @@
 .prose code {
   font-family: var(--font-mono);
   font-size: 0.85em;
-  background: hsl(var(--muted));
+  background: hsl(var(--code-bg));
+  color: hsl(var(--code-fg));
   border-radius: calc(var(--radius) - 4px);
   padding: 0.15em 0.4em;
 }
 .prose pre {
-  background: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
+  background: hsl(var(--code-bg));
+  color: hsl(var(--code-fg));
+  border: 1px solid hsl(var(--code-fg) / 0.12);
   border-radius: var(--radius);
   padding: 1rem 1.15rem;
   overflow-x: auto;
-  box-shadow: var(--shadow-inner-soft);
   font-size: 0.85rem;
   line-height: 1.6;
 }
-.prose pre code { background: transparent; padding: 0; font-size: inherit; }
+.prose pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
 .prose hr { border: 0; border-top: 1px solid hsl(var(--border)); margin: 2.5rem 0; }
 /* Tables scroll horizontally on narrow screens instead of overflowing. */
 .prose table { display: block; width: 100%; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 0.95rem; }
