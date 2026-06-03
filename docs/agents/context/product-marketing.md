@@ -8,6 +8,7 @@ This file routes marketing skills to the canonical website context docs. Do not 
 
 - Product and app context: `docs/context/app/product-context.md`
 - Technical implementation context: `docs/context/app/technical-context.md`
+- Branding and style context: `docs/context/branding/README.md`
 - Business positioning context: `docs/context/business/business-context.md`
 - Marketing website brief: `docs/context/business/marketing-site-brief.md`
 - Workspace conventions: `docs/context/workspace.md`

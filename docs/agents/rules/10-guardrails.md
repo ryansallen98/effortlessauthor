@@ -4,6 +4,7 @@
 - Read relevant local docs before implementation; use official external docs when local docs are absent or stale.
 - Keep durable project rules and skills under `docs/agents`; adapter files should point back to that folder instead of duplicating rules.
 - Use the UI library already present in the repo for provided primitives before creating custom UI components.
+- Before building marketing UI, read `docs/context/branding/README.md` and mirror the sibling app's theme variables, fonts, component primitives, and state patterns.
 - For debugging, inspect relevant logs before concluding and use Perplexity MCP or an equivalent live-search tool after a failed debugging attempt.
 - For external APIs, document current routes, auth, inputs, and outputs before coding against them.
 - For API integrations, confirm remote object shape with a read-only GET test before write operations.
