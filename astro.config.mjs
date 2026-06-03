@@ -12,6 +12,11 @@ const SITE = process.env.SITE_URL || 'https://effortlessauthor.com';
 export default defineConfig({
   site: SITE,
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
+  // Use a CSS-variables Shiki theme so code blocks inherit the warm palette
+  // (mapped in src/styles/global.css) and adapt to light/dark.
+  markdown: {
+    shikiConfig: { theme: 'css-variables', wrap: false },
+  },
   integrations: [sitemap(), pagefind()],
   vite: {
     plugins: [tailwindcss()],

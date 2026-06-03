@@ -56,7 +56,7 @@ Track the things you author; ignore the things you generate or that bloat the re
 
 A starter `.gitignore`:
 
-```gitignore
+```bash
 # Generated output
 exports/
 *.epub

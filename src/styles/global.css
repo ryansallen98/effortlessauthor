@@ -225,6 +225,27 @@
 .prose .code-wrap > .copy-btn:hover { color: hsl(var(--foreground)); }
 .prose .code-wrap > .copy-btn.copied { color: hsl(var(--emerald-600)); border-color: hsl(var(--emerald-600) / 0.4); }
 
+/* ---- Code highlighting (Shiki css-variables → warm palette) ----------- */
+:root {
+  --astro-code-color-text: hsl(var(--foreground));
+  --astro-code-color-background: hsl(var(--card));
+  --astro-code-token-comment: hsl(var(--muted-foreground));
+  --astro-code-token-punctuation: hsl(var(--muted-foreground));
+  --astro-code-token-keyword: hsl(var(--primary));
+  --astro-code-token-link: hsl(var(--primary));
+  --astro-code-token-constant: hsl(var(--orange-600));
+  --astro-code-token-function: hsl(var(--amber-600));
+  --astro-code-token-parameter: hsl(var(--foreground));
+  --astro-code-token-string: hsl(var(--emerald-600));
+  --astro-code-token-string-expression: hsl(var(--emerald-600));
+}
+.dark {
+  --astro-code-token-constant: hsl(var(--orange-500));
+  --astro-code-token-function: hsl(var(--amber-500));
+  --astro-code-token-string: hsl(var(--emerald-500));
+  --astro-code-token-string-expression: hsl(var(--emerald-500));
+}
+
 /* ---- Prose (Markdown content: legal pages + guides) ------------------- */
 .prose {
   color: hsl(var(--foreground) / 0.9);
