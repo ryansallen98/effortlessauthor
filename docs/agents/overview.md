@@ -14,6 +14,7 @@ Before working in this repository, agents must read:
 - `docs/agents/rules/10-guardrails.md`
 - Every file under `docs/agents/rules`
 - `docs/agents/skills/overview.md`
+- `docs/context/README.md`
 - Any system documentation under `docs/` relevant to the task
 
 ## Rule Index
@@ -26,6 +27,10 @@ Before working in this repository, agents must read:
 Project-specific skills live under `docs/agents/skills/**/SKILL.md`. See `docs/agents/skills/overview.md` before adding or using project skills.
 
 The marketing skill set from `coreyhaines31/marketingskills` is vendored into `docs/agents/skills` with shared tool references under `docs/agents/tools`. Product marketing context belongs at `docs/agents/context/product-marketing.md`; marketing-plan working files belong under `docs/agents/marketing-plans`.
+
+## Project Context Index
+
+Marketing-site builders should start with `docs/context/README.md`. That folder captures the sibling app, product, business, and marketing-site context without hard-coding any developer-specific absolute filesystem path.
 
 ## Agent Adapters
 
