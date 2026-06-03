@@ -7,6 +7,10 @@
 import Icon from "../Icon.astro";
 import Button from "../ui/Button.astro";
 import Badge from "../ui/Badge.astro";
+import Pin from "../Pin.astro";
+
+interface Props { annotate?: boolean }
+const { annotate = false } = Astro.props;
 
 const checks = [
   { label: "Strict XHTML content documents", state: "ok" },
@@ -20,7 +24,8 @@ const checks = [
 ];
 ---
 <div class="@container overflow-hidden rounded-lg border bg-card shadow-soft-lg" role="img" aria-label="KDP-aware export validation report">
-  <div class="flex items-center justify-between gap-3 border-b border-border/50 bg-card/60 px-4 py-3 backdrop-blur-md">
+  <div class="relative flex items-center justify-between gap-3 border-b border-border/50 bg-card/60 px-4 py-3 backdrop-blur-md">
+    {annotate && <Pin n={1} class="left-1/2 top-1.5 -translate-x-1/2" />}
     <span class="flex items-center gap-2">
       <span class="flex h-8 w-8 items-center justify-center rounded-md bg-gradient-to-br from-primary/20 to-orange-500/20 text-primary"><Icon name="shield-check" class="h-4 w-4" /></span>
       <span class="font-serif text-sm font-bold leading-tight">Export validation

@@ -10,6 +10,10 @@ import Badge from "../ui/Badge.astro";
 import Label from "../ui/Label.astro";
 import TabsList from "../ui/TabsList.astro";
 import TabsTrigger from "../ui/TabsTrigger.astro";
+import Pin from "../Pin.astro";
+
+interface Props { annotate?: boolean }
+const { annotate = false } = Astro.props;
 
 const keywords = ["enochian magic", "ceremonial ritual", "angelic invocation", "western esotericism", "grimoire"];
 ---
@@ -24,6 +28,8 @@ const keywords = ["enochian magic", "ceremonial ritual", "angelic invocation", "
   </div>
 
   <div class="p-4">
+    <div class="relative">
+    {annotate && <Pin n={1} class="-right-2 -top-2" />}
     <TabsList class="flex h-auto w-full flex-wrap justify-start gap-1">
       <TabsTrigger class="flex-1 gap-1.5"><Icon name="book-open" class="h-3.5 w-3.5" />Basic</TabsTrigger>
       <TabsTrigger class="flex-1 gap-1.5"><Icon name="file-text" class="h-3.5 w-3.5" />Description</TabsTrigger>
@@ -31,9 +37,11 @@ const keywords = ["enochian magic", "ceremonial ritual", "angelic invocation", "
       <TabsTrigger active class="flex-1 gap-1.5"><Icon name="tag" class="h-3.5 w-3.5" />Discovery</TabsTrigger>
       <TabsTrigger class="flex-1 gap-1.5"><Icon name="package" class="h-3.5 w-3.5" />Specs</TabsTrigger>
     </TabsList>
+    </div>
 
     <div class="mt-4 grid gap-4">
-      <div class="flex flex-col gap-1.5">
+      <div class="relative flex flex-col gap-1.5">
+        {annotate && <Pin n={2} class="-right-2 -top-2" />}
         <Label class="flex items-center gap-2">Keywords <span class="text-xs font-normal text-muted-foreground">(5 / 7)</span></Label>
         <div class="flex flex-wrap gap-1.5">
           {keywords.map((k) => (
@@ -43,13 +51,15 @@ const keywords = ["enochian magic", "ceremonial ritual", "angelic invocation", "
         <span class="text-[11px] text-muted-foreground">Up to 7 keywords · 50 characters each</span>
       </div>
 
-      <div class="flex flex-col gap-1.5">
+      <div class="relative flex flex-col gap-1.5">
+        {annotate && <Pin n={3} class="-right-2 -top-2" />}
         <Label class="flex items-center gap-2">Categories <span class="text-xs font-normal text-muted-foreground">(2 / 3)</span></Label>
         <div class="flex h-9 items-center gap-2 rounded-md border border-border/60 bg-muted/40 px-2.5 text-[13px]"><Icon name="list-ordered" class="h-3.5 w-3.5 text-muted-foreground" />Religion &amp; Spirituality › Occultism</div>
         <div class="flex h-9 items-center gap-2 rounded-md border border-border/60 bg-muted/40 px-2.5 text-[13px]"><Icon name="list-ordered" class="h-3.5 w-3.5 text-muted-foreground" />Body, Mind &amp; Spirit › Magic Studies</div>
       </div>
 
-      <div class="flex flex-col gap-1.5">
+      <div class="relative flex flex-col gap-1.5">
+        {annotate && <Pin n={4} class="-right-2 -top-2" />}
         <Label class="flex items-center gap-2">Book description <span class="text-xs font-normal text-muted-foreground">(1,842 / 4,000)</span></Label>
         <div class="rounded-md border border-input bg-background/50 p-3">
           <div class="flex flex-col gap-2">
