@@ -1,0 +1,85 @@
+---
+/**
+ * Designed demo book covers (3:4) for the dashboard mock — one per example
+ * genre. Pure inline SVG so they stay crisp, themeable, and use the site fonts.
+ */
+interface Props { variant: "enochian" | "color" | "software"; class?: string }
+const { variant, class: className } = Astro.props;
+const serif = "'Crimson Pro', Georgia, serif";
+const sans = "'DM Sans', system-ui, sans-serif";
+const mono = "ui-monospace, 'SFMono-Regular', Menlo, monospace";
+---
+{variant === "enochian" && (
+  <svg viewBox="0 0 300 400" class={className} preserveAspectRatio="xMidYMid slice" role="img" aria-label="Cover: The Enochian Keys">
+    <defs>
+      <linearGradient id="enoBg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2a1a10" />
+        <stop offset="1" stop-color="#180f08" />
+      </linearGradient>
+    </defs>
+    <rect width="300" height="400" fill="url(#enoBg)" />
+    <rect x="14" y="14" width="272" height="372" fill="none" stroke="#c99a4e" stroke-opacity="0.5" stroke-width="1" />
+    <rect x="19" y="19" width="262" height="362" fill="none" stroke="#c99a4e" stroke-opacity="0.25" stroke-width="0.75" />
+    <!-- sigil -->
+    <g transform="translate(150 132)" stroke="#e9c887" fill="none" stroke-width="1.25">
+      <circle r="58" stroke-opacity="0.6" />
+      <circle r="44" stroke-opacity="0.4" />
+      <circle r="20" stroke-opacity="0.85" />
+      <path d="M0 -58 V58 M-58 0 H58 M-41 -41 L41 41 M41 -41 L-41 41" stroke-opacity="0.3" />
+      <circle r="6" fill="#e9c887" stroke="none" />
+      <g fill="#e9c887" stroke="none">
+        <circle cx="0" cy="-58" r="2.5" /><circle cx="0" cy="58" r="2.5" />
+        <circle cx="-58" cy="0" r="2.5" /><circle cx="58" cy="0" r="2.5" />
+      </g>
+    </g>
+    <text x="150" y="252" text-anchor="middle" fill="#f2dcae" font-family={serif} font-size="13" letter-spacing="6">THE</text>
+    <text x="150" y="288" text-anchor="middle" fill="#e9c887" font-family={serif} font-size="32" font-weight="700" letter-spacing="2">ENOCHIAN</text>
+    <text x="150" y="322" text-anchor="middle" fill="#e9c887" font-family={serif} font-size="32" font-weight="700" letter-spacing="8">KEYS</text>
+    <line x1="120" y1="344" x2="180" y2="344" stroke="#c99a4e" stroke-width="1" stroke-opacity="0.6" />
+    <text x="150" y="366" text-anchor="middle" fill="#c9b08a" font-family={sans} font-size="11" letter-spacing="3">A. DEE</text>
+  </svg>
+)}
+
+{variant === "color" && (
+  <svg viewBox="0 0 300 400" class={className} preserveAspectRatio="xMidYMid slice" role="img" aria-label="Cover: Field Notes on Color">
+    <rect width="300" height="400" fill="#faf6ef" />
+    <!-- swatch grid -->
+    <g>
+      <rect x="34" y="40" width="52" height="68" rx="4" fill="#d45f11" />
+      <rect x="94" y="40" width="52" height="68" rx="4" fill="#e8a53d" />
+      <rect x="154" y="40" width="52" height="68" rx="4" fill="#2f9e8f" />
+      <rect x="214" y="40" width="52" height="68" rx="4" fill="#4c5b9e" />
+      <rect x="64" y="116" width="52" height="68" rx="4" fill="#c8536b" />
+      <rect x="124" y="116" width="52" height="68" rx="4" fill="#7aa05a" />
+      <rect x="184" y="116" width="52" height="68" rx="4" fill="#2c2621" />
+    </g>
+    <text x="40" y="262" fill="#2c2621" font-family={serif} font-size="34" font-weight="700">Field Notes</text>
+    <text x="40" y="298" fill="#2c2621" font-family={serif} font-size="34" font-weight="700">on <tspan fill="#d45f11">Color</tspan></text>
+    <line x1="40" y1="322" x2="120" y2="322" stroke="#2c2621" stroke-width="2" />
+    <text x="40" y="350" fill="#7e7367" font-family={sans} font-size="12" letter-spacing="1">A practical field guide</text>
+    <text x="40" y="372" fill="#9a8f80" font-family={sans} font-size="11" letter-spacing="2">M. REYES</text>
+  </svg>
+)}
+
+{variant === "software" && (
+  <svg viewBox="0 0 300 400" class={className} preserveAspectRatio="xMidYMid slice" role="img" aria-label="Cover: Shipping Software">
+    <defs>
+      <linearGradient id="swBg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#241a12" />
+        <stop offset="1" stop-color="#171210" />
+      </linearGradient>
+    </defs>
+    <rect width="300" height="400" fill="url(#swBg)" />
+    <!-- terminal window -->
+    <rect x="34" y="40" width="232" height="118" rx="10" fill="#2a211a" stroke="#3a2e23" />
+    <g><circle cx="50" cy="58" r="4" fill="#d45f11" /><circle cx="64" cy="58" r="4" fill="#e8a53d" /><circle cx="78" cy="58" r="4" fill="#7aa05a" /></g>
+    <line x1="34" y1="72" x2="266" y2="72" stroke="#3a2e23" />
+    <text x="50" y="98" font-family={mono} font-size="11" fill="#e8a53d">$ <tspan fill="#f2ece4">build --release</tspan></text>
+    <text x="50" y="118" font-family={mono} font-size="11" fill="#7aa05a">✓ <tspan fill="#a89c8d">37 tests passed</tspan></text>
+    <text x="50" y="138" font-family={mono} font-size="11" fill="#e8a53d">$ <tspan fill="#f2ece4">ship</tspan><tspan fill="#d45f11"> ▍</tspan></text>
+    <text x="34" y="252" fill="#f5efe7" font-family={sans} font-size="36" font-weight="700" letter-spacing="-0.5">Shipping</text>
+    <text x="34" y="292" fill="#f5efe7" font-family={sans} font-size="36" font-weight="700" letter-spacing="-0.5">Software</text>
+    <rect x="34" y="306" width="64" height="4" rx="2" fill="#d45f11" />
+    <text x="34" y="368" fill="#a89c8d" font-family={mono} font-size="11" letter-spacing="1">D. OKORO</text>
+  </svg>
+)}

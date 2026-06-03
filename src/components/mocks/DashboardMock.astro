@@ -7,11 +7,12 @@ import Icon from "../Icon.astro";
 import BrandLockup from "../BrandLockup.astro";
 import Button from "../ui/Button.astro";
 import Badge from "../ui/Badge.astro";
+import BookCover from "./BookCover.astro";
 
 const books = [
-  { title: "The Enochian Keys", author: "A. Dee", series: "Aethyr Cycle", pos: "#1", files: 14, kw: ["grimoire", "ritual"] },
-  { title: "Field Notes on Color", author: "M. Reyes", series: null, pos: null, files: 9, kw: ["nonfiction"] },
-  { title: "Shipping Software", author: "D. Okoro", series: "Craft & Ship", pos: "#2", files: 22, kw: ["technical"] },
+  { title: "The Enochian Keys", author: "A. Dee", series: "Aethyr Cycle", pos: "#1", files: 14, kw: ["grimoire", "ritual"], cover: "enochian" as const },
+  { title: "Field Notes on Color", author: "M. Reyes", series: null, pos: null, files: 9, kw: ["nonfiction"], cover: "color" as const },
+  { title: "Shipping Software", author: "D. Okoro", series: "Craft & Ship", pos: "#2", files: 22, kw: ["technical"], cover: "software" as const },
 ];
 ---
 <div class="@container overflow-hidden rounded-lg border bg-card shadow-soft-lg" role="img" aria-label="EffortlessAuthor dashboard with a grid of book projects">
@@ -38,16 +39,14 @@ const books = [
     <div class="grid grid-cols-1 gap-3.5 @md:grid-cols-2 @2xl:grid-cols-3">
       {books.map((b) => (
         <article class="flex flex-col gap-2.5 rounded-lg border border-border/60 bg-card/80 p-3 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-soft-lg">
-          <div class="relative flex aspect-3/4 flex-col justify-end overflow-hidden rounded-md border border-border/60 p-3 shadow-soft" style="background-image:linear-gradient(135deg,hsl(var(--primary)/0.15),hsl(25_95%_53%/0.1) 50%,hsl(38_92%_50%/0.15))">
-            <span class="absolute inset-y-0 left-0 w-1.5 bg-primary/40"></span>
+          <div class="relative aspect-3/4 overflow-hidden rounded-md border border-border/60 shadow-soft">
+            <BookCover variant={b.cover} class="h-full w-full" />
             {b.series && (
               <span class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full border border-border/50 bg-background/90 px-1.5 py-0.5 text-[10px] font-semibold backdrop-blur-sm">
                 <Icon name="library" class="h-2.5 w-2.5 text-primary" />{b.series}
                 <span class="rounded-full bg-primary/10 px-1 text-primary">{b.pos}</span>
               </span>
             )}
-            <span class="font-serif text-[15px] font-bold leading-tight">{b.title}</span>
-            <span class="mt-0.5 text-[11px] text-muted-foreground">by {b.author}</span>
           </div>
           <div class="flex items-center justify-between text-[11px] text-muted-foreground">
             <span class="inline-flex items-center gap-1"><Icon name="file-text" class="h-3 w-3" />{b.files} files</span>
