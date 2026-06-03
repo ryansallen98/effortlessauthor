@@ -1,0 +1,16 @@
+---
+/**
+ * Numbered annotation marker. Rendered INSIDE a mock's real DOM region (which
+ * must be `relative`) so it stays aligned as the mock reflows. Pair with a
+ * <Figure> legend that explains each number.
+ */
+interface Props { n: number; class?: string }
+const { n, class: className } = Astro.props;
+---
+<span
+  class:list={[
+    "absolute z-20 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground shadow-soft ring-2 ring-card",
+    className,
+  ]}
+  aria-hidden="true"
+>{n}</span>

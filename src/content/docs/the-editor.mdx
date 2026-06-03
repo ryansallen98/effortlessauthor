@@ -7,11 +7,29 @@ readingTime: "7 min read"
 updated: "2026-06-03"
 ---
 
+import Figure from "../../components/Figure.astro";
+import EditorMock from "../../components/mocks/EditorMock.astro";
+
 The editor is where you do your writing. It puts a structured file tree, a Markdown editor, and a live preview side by side so you can write and see results at once. This guide walks through the layout, the keyboard shortcuts, and how saving and file-change handling work.
 
 ## Layout
 
 The editor screen has five regions.
+
+<Figure
+  caption="The editor screen and its five regions."
+  min={780}
+  max={920}
+  legend={[
+    { n: 1, label: "App bar — save, preview, settings, and the KDP-aware Export EPUB action" },
+    { n: 2, label: "File tree — your manuscript as sections and files; add, rename, and drag to reorder" },
+    { n: 3, label: "Markdown editor — write in plain Markdown with formatting shortcuts" },
+    { n: 4, label: "Live preview — a rendered view that updates as you type" },
+    { n: 5, label: "Status bar — file path, word count, and a KDP-ready check" },
+  ]}
+>
+  <EditorMock annotate />
+</Figure>
 
 ### App bar (top)
 
@@ -43,7 +61,7 @@ A rendered preview of the current file that updates as you type, so you can see 
 
 A thin bar showing the path of the file you're editing, the current file's word count, and a **KDP Ready** indicator.
 
-## Keyboard shortcuts {#keyboard-shortcuts}
+## Keyboard shortcuts
 
 The Markdown editor supports formatting shortcuts. Use **Ctrl** on Windows/Linux or **Cmd** on macOS.
 

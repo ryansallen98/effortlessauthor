@@ -11,6 +11,10 @@
 import Icon from "../Icon.astro";
 import Button from "../ui/Button.astro";
 import Badge from "../ui/Badge.astro";
+import Pin from "../Pin.astro";
+
+interface Props { annotate?: boolean }
+const { annotate = false } = Astro.props;
 
 const tree = [
   { icon: "chevron-down", glyph: "folder-open", label: "front-matter", indent: false },
@@ -35,7 +39,8 @@ const tree = [
   </div>
 
   <!-- app bar -->
-  <div class="flex h-13 items-center justify-between gap-3 border-b border-border/50 bg-card/60 px-3.5 py-2 backdrop-blur-md">
+  <div class="relative flex h-13 items-center justify-between gap-3 border-b border-border/50 bg-card/60 px-3.5 py-2 backdrop-blur-md">
+    {annotate && <Pin n={1} class="left-1/2 top-1.5 -translate-x-1/2" />}
     <div class="flex min-w-0 items-center gap-2.5">
       <span class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md border border-border bg-background text-muted-foreground"><Icon name="arrow-left" class="h-3.5 w-3.5" /></span>
       <span class="min-w-0">
@@ -54,7 +59,8 @@ const tree = [
   <!-- body: columns adapt to container width -->
   <div class="grid min-h-[16rem] grid-cols-1 @sm:grid-cols-[9rem_1fr] @3xl:grid-cols-[11rem_1fr_1fr]">
     <!-- file tree (>= @sm) -->
-    <aside class="hidden border-r border-border/60 bg-card/40 p-2.5 @sm:block">
+    <aside class="relative hidden border-r border-border/60 bg-card/40 p-2.5 @sm:block">
+      {annotate && <Pin n={2} class="right-1.5 top-1.5" />}
       <div class="flex items-center justify-between px-1 pb-2">
         <span class="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-muted-foreground"><Icon name="sparkles" class="h-3 w-3" />Files</span>
         <Icon name="plus" class="h-3.5 w-3.5 text-muted-foreground" />
@@ -71,7 +77,8 @@ const tree = [
     </aside>
 
     <!-- markdown source -->
-    <div class="min-w-0 border-border/60 @sm:border-r">
+    <div class="relative min-w-0 border-border/60 @sm:border-r">
+      {annotate && <Pin n={3} class="right-1.5 top-1.5" />}
       <div class="flex flex-wrap gap-1.5 border-b border-border/50 bg-muted/50 px-3 py-2">
         <Badge variant="mono">title: First Key</Badge>
         <Badge variant="mono">type: chapter</Badge>
@@ -92,7 +99,8 @@ const tree = [
     </div>
 
     <!-- live preview (>= @3xl) -->
-    <div class="hidden min-w-0 @3xl:block">
+    <div class="relative hidden min-w-0 @3xl:block">
+      {annotate && <Pin n={4} class="right-1.5 top-1.5" />}
       <div class="flex items-center gap-1.5 border-b border-border/50 bg-muted/30 px-3 py-2 text-[11px] text-muted-foreground"><Icon name="eye" class="h-3 w-3" />Live preview</div>
       <div class="px-5 py-4">
         <h4 class="font-serif text-[17px] font-bold">The First Key</h4>
@@ -111,7 +119,8 @@ const tree = [
   </div>
 
   <!-- status bar -->
-  <div class="flex h-9 items-center justify-between gap-2 border-t border-border/50 bg-muted/40 px-3.5 text-[11px] text-muted-foreground">
+  <div class="relative flex h-9 items-center justify-between gap-2 border-t border-border/50 bg-muted/40 px-3.5 text-[11px] text-muted-foreground">
+    {annotate && <Pin n={5} class="left-1.5 top-1/2 -translate-y-1/2" />}
     <span class="truncate font-mono">content/03-first-key.md</span>
     <span class="flex flex-shrink-0 items-center gap-3">
       <span class="hidden @sm:inline">1,204 words</span>

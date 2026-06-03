@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import pagefind from 'astro-pagefind';
+import mdx from '@astrojs/mdx';
 
 // Public site URL — used for canonical URLs, sitemap, RSS, and OG image URLs.
 // Override at build time with SITE_URL once the final domain is chosen.
@@ -46,7 +47,7 @@ export default defineConfig({
   markdown: {
     shikiConfig: { theme: warmDarkCodeTheme, wrap: false },
   },
-  integrations: [sitemap(), pagefind()],
+  integrations: [mdx(), sitemap(), pagefind()],
   vite: {
     plugins: [tailwindcss()],
   },

@@ -1,0 +1,33 @@
+---
+/**
+ * Annotated figure for the docs: wraps a mock (passed as the default slot) in a
+ * framed, horizontally-scrollable canvas and renders a numbered legend that
+ * matches the <Pin> markers inside the mock. `min` forces a wide-enough canvas
+ * so the mock shows its full layout; it scrolls on small screens.
+ */
+interface Props {
+  legend: { n: number; label: string }[];
+  caption?: string;
+  min?: number; // min canvas width in px
+  max?: number; // max canvas width in px
+}
+const { legend, caption, min = 680, max = 860 } = Astro.props;
+---
+<figure class="not-prose my-8">
+  <div class="overflow-x-auto rounded-xl border border-border bg-card/50 p-3 shadow-soft sm:p-4">
+    <div class="mx-auto" style={`min-width:${min}px;max-width:${max}px`}>
+      <slot />
+    </div>
+  </div>
+  <figcaption class="mt-4">
+    {caption && <p class="mb-3 text-sm text-muted-foreground">{caption}</p>}
+    <ol class="grid gap-x-6 gap-y-2 sm:grid-cols-2">
+      {legend.map((item) => (
+        <li class="flex items-start gap-2.5 text-sm">
+          <span class="mt-px flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">{item.n}</span>
+          <span class="text-muted-foreground"><strong class="font-semibold text-foreground">{item.label.split(" — ")[0]}</strong>{item.label.includes(" — ") ? " — " + item.label.split(" — ").slice(1).join(" — ") : ""}</span>
+        </li>
+      ))}
+    </ol>
+  </figcaption>
+</figure>
