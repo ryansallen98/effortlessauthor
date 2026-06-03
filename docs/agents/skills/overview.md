@@ -21,6 +21,7 @@ Layout adaptations:
 - Skill folders live under `docs/agents/skills/<skill-name>/SKILL.md`.
 - Skill references live beside each skill under `references/`.
 - Source eval artifacts were excluded.
+- Shared marketing tool references live under `docs/agents/tools` so existing relative tool links continue to resolve.
 - Product marketing context uses `docs/agents/context/product-marketing.md`.
 - Marketing plan working files use `docs/agents/marketing-plans/<client-slug>/`.
 

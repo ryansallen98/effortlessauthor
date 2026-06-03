@@ -25,6 +25,8 @@ Before working in this repository, agents must read:
 
 Project-specific skills live under `docs/agents/skills/**/SKILL.md`. See `docs/agents/skills/overview.md` before adding or using project skills.
 
+The marketing skill set from `coreyhaines31/marketingskills` is vendored into `docs/agents/skills` with shared tool references under `docs/agents/tools`. Product marketing context belongs at `docs/agents/context/product-marketing.md`; marketing-plan working files belong under `docs/agents/marketing-plans`.
+
 ## Agent Adapters
 
 Current adapters point to `docs/agents/agent.md`:
