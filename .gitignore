@@ -17,6 +17,10 @@ pnpm-debug.log*
 .env
 .env.production
 
+# generated screenshot sandbox state
+scripts/screenshots/sandbox/data/*.db
+scripts/screenshots/sandbox/data/*.db-*
+
 # macOS-specific files
 .DS_Store
 

@@ -1,0 +1,11 @@
+/* Custom styles for your book */
+/* These styles will be included in the EPUB export */
+
+/* Example: Custom chapter heading style */
+/*
+h1.chapter-title {
+  font-size: 2em;
+  text-align: center;
+  margin-top: 2em;
+}
+*/
