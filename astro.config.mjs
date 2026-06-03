@@ -1,13 +1,22 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { loadEnv } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import pagefind from 'astro-pagefind';
 import mdx from '@astrojs/mdx';
 
 // Public site URL — used for canonical URLs, sitemap, RSS, and OG image URLs.
-// Override at build time with SITE_URL once the final domain is chosen.
-const SITE = process.env.SITE_URL || 'https://effortlessauthor.com';
+// The public domain is intentionally NOT hard-coded (the launch brand/domain is
+// still undecided). Set SITE_URL in a `.env` file (see .env.example) or the
+// deploy environment; dev falls back to localhost so absolute URLs resolve
+// without committing to a domain. loadEnv reads `.env*` files here because
+// astro.config runs before Vite auto-loads them into import.meta.env.
+const env = loadEnv(process.env.NODE_ENV ?? 'development', process.cwd(), '');
+const SITE = env.SITE_URL || 'http://localhost:4321';
+if (!env.SITE_URL) {
+  console.warn(`[astro] SITE_URL not set — using ${SITE}. Set it in .env (or the deploy env) before deploying so canonical/OG/sitemap URLs are correct.`);
+}
 
 // Warm-on-dark code theme — brand accent colours on the dark background token
 // (#171411). Used in both light and dark mode so code surfaces never switch.

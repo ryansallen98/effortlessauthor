@@ -1,20 +1,23 @@
 ---
 import "../styles/global.css";
+import { requireSite } from "../lib/site";
 
 interface Props {
   title?: string;
   description?: string;
   image?: string; // path relative to site root, e.g. "/og-default.png"
+  imageAlt?: string;
   jsonLd?: Record<string, unknown>[];
 }
 const {
   title = "EffortlessAuthor — KDP Authoring Studio",
   description = "A file-first authoring studio for Kindle-ready books. Keep every chapter, style guide, source, cover, and export in a transparent project folder — with a structured editor, KDP-aware validation, metadata prep, EPUB export, version history, and narrated audio from the same source of truth.",
   image = "/og-default.png",
+  imageAlt = "EffortlessAuthor — a file-first studio for Kindle-ready books, with a Markdown manuscript window showing KDP-aware EPUB and narrated audio export.",
   jsonLd = [],
 } = Astro.props;
 
-const site = Astro.site ?? new URL("https://effortlessauthor.com");
+const site = requireSite(Astro.site);
 const canonical = new URL(Astro.url.pathname, site).href;
 const ogImage = new URL(image, site).href;
 const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
@@ -78,13 +81,19 @@ const structuredData = [...baseJsonLd, ...jsonLd];
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:site_name" content="EffortlessAuthor" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title="EffortlessAuthor updates" href="/rss.xml" />

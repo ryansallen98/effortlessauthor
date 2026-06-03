@@ -1,6 +1,7 @@
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 import type { APIContext } from "astro";
+import { requireSite } from "../lib/site";
 
 export async function GET(context: APIContext) {
   const updates = (await getCollection("updates")).sort(
@@ -9,7 +10,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: "EffortlessAuthor — Updates",
     description: "Build-in-public updates from EffortlessAuthor, the file-first KDP authoring studio.",
-    site: context.site ?? "https://effortlessauthor.com",
+    site: requireSite(context.site),
     items: updates.map((u) => ({
       title: u.data.title,
       description: u.data.description,

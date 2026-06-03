@@ -38,7 +38,7 @@ preview first, then point it at that URL (e.g. `npm run audit http://localhost:4
 
 | Variable | Purpose |
 | :------- | :------ |
-| `SITE_URL` | Public base URL used for canonical tags, sitemap, RSS, and OG image URLs. Defaults to a placeholder — set it once the domain is chosen. |
+| `SITE_URL` | Public base URL used for canonical tags, sitemap, RSS, and OG image URLs. Set in `.env` (see `.env.example`) or the deploy env. No domain is hard-coded — dev falls back to `http://localhost:4321`, and a build warns if it's unset. |
 | `PUBLIC_PLAUSIBLE_DOMAIN` | When set, injects a [Plausible](https://plausible.io) analytics script for that domain. Unset = no analytics. |
 
 ### Production features

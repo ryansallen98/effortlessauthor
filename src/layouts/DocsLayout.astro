@@ -5,6 +5,7 @@ import Icon from "../components/Icon.astro";
 import Badge from "../components/ui/Badge.astro";
 import CommandSearch from "../components/CommandSearch.astro";
 import { groupDocs, sortDocs, docHref, type DocEntry } from "../lib/docs";
+import { requireSite } from "../lib/site";
 
 interface Props {
   entry: DocEntry;
@@ -23,7 +24,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 const here = docHref(entry);
 const { title, description, section, readingTime } = entry.data;
 
-const site = Astro.site ?? new URL("https://effortlessauthor.com");
+const site = requireSite(Astro.site);
 const url = new URL(here, site).href;
 const jsonLd = [
   { "@context": "https://schema.org", "@type": "TechArticle", headline: title, description, articleSection: section, url },
