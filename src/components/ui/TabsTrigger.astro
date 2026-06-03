@@ -1,0 +1,24 @@
+---
+/**
+ * Astro mirror of app/src/components/ui/tabs.tsx (TabsTrigger).
+ * Static-friendly: pass `active` to set data-state, and `value` to wire up the
+ * optional vanilla tab controller (data-tab).
+ */
+import { cn } from "@/lib/utils";
+interface Props { class?: string; active?: boolean; value?: string; [key: string]: unknown; }
+const { class: className, active = false, value, ...rest } = Astro.props;
+---
+<button
+  type="button"
+  role="tab"
+  data-state={active ? "active" : "inactive"}
+  data-tab={value}
+  aria-selected={active}
+  class={cn(
+    "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
+    className
+  )}
+  {...rest}
+>
+  <slot />
+</button>

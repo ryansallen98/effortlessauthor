@@ -1,0 +1,16 @@
+---
+// Astro mirror of app/src/components/ui/label.tsx (shadcn).
+import { cn } from "@/lib/utils";
+interface Props { class?: string; for?: string; [key: string]: unknown; }
+const { class: className, for: htmlFor, ...rest } = Astro.props;
+---
+<label
+  for={htmlFor}
+  class={cn(
+    "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+    className
+  )}
+  {...rest}
+>
+  <slot />
+</label>

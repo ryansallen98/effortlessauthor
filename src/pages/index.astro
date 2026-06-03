@@ -1,17 +1,27 @@
 ---
-
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Hero from "../components/sections/Hero.astro";
+import Workflow from "../components/sections/Workflow.astro";
+import ProductSurface from "../components/sections/ProductSurface.astro";
+import KdpPipeline from "../components/sections/KdpPipeline.astro";
+import AiWorkflow from "../components/sections/AiWorkflow.astro";
+import AudioWorkflow from "../components/sections/AudioWorkflow.astro";
+import UseCases from "../components/sections/UseCases.astro";
+import CTA from "../components/sections/CTA.astro";
+import Footer from "../components/Footer.astro";
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base>
+  <Nav />
+  <main>
+    <Hero />
+    <Workflow />
+    <ProductSurface />
+    <KdpPipeline />
+    <AiWorkflow />
+    <AudioWorkflow />
+    <UseCases />
+    <CTA />
+  </main>
+  <Footer />
+</Base>

@@ -1,0 +1,35 @@
+---
+import Icon from "../Icon.astro";
+import SectionHeading from "../SectionHeading.astro";
+import Badge from "../ui/Badge.astro";
+
+const cases = [
+  { icon: "book-open", title: "Single nonfiction book", body: "Structure front matter, chapters, and back matter, then validate and export a clean KDP-ready EPUB.", tag: "Nonfiction" },
+  { icon: "library", title: "Multi-volume series", body: "Define a series, keep volume metadata coherent, and manage shared style across every book.", tag: "Series" },
+  { icon: "file-code", title: "Technical / business book", body: "Keep code-heavy Markdown, custom CSS, and precise structure under version history.", tag: "Technical" },
+  { icon: "wand", title: "AI-assisted draft pipeline", body: "Draft from sources and a style guide, then review inspectable chapters before export.", tag: "AI-assisted" },
+  { icon: "volume2", title: "Narrated editions", body: "Add chapter and full-book audio from the same manuscript with voice casting and review.", tag: "Audio" },
+  { icon: "git-branch", title: "Manuscript in Git", body: "Treat the book as a repository — diff changes, branch experiments, and keep full provenance.", tag: "Version control" },
+];
+---
+<section id="use-cases" class="relative z-10 py-20 lg:py-28">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <SectionHeading center eyebrow="Use cases" eyebrowIcon="layers" title="Built for books that behave like real projects.">
+      From a single nonfiction title to a multi-volume series, the same file-first studio carries
+      the work from draft to KDP-ready export and narrated audio.
+    </SectionHeading>
+
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {cases.map((c) => (
+        <div class="group flex h-full flex-col rounded-lg border border-border/60 bg-card/80 p-6 shadow-soft backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-soft-lg">
+          <div class="mb-4 flex items-center justify-between">
+            <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-orange-500/20 text-primary"><Icon name={c.icon} class="h-5 w-5" /></span>
+            <Badge variant="mono">{c.tag}</Badge>
+          </div>
+          <h3 class="font-serif text-lg font-semibold">{c.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{c.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

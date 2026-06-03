@@ -1,0 +1,64 @@
+---
+import Icon from "../Icon.astro";
+import SectionHeading from "../SectionHeading.astro";
+import Badge from "../ui/Badge.astro";
+
+const points = [
+  { icon: "library", title: "Sources stay in sources/", body: "Reference material lives beside the manuscript, so AI drafts cite from a stable, inspectable set of files." },
+  { icon: "book-marked", title: "A style guide per book", body: "Each book carries its own style.md — voice and conventions travel with the project, not a chat window." },
+  { icon: "file-text", title: "Chapters are real Markdown", body: "Every chapter is a file you can open, review, and correct — not buried output you can't trust." },
+  { icon: "history", title: "Snapshots protect edits", body: "Version history guards against runaway changes, so you can experiment and roll back." },
+];
+
+const sources = [
+  { name: "enochian-tablets.pdf", meta: "2.4 MB · reference", glyph: "file-text", color: "text-blue-500" },
+  { name: "dee-diaries-excerpts.md", meta: "61 KB · notes", glyph: "file-text", color: "text-muted-foreground" },
+  { name: "pronunciation-guide.md", meta: "12 KB · notes", glyph: "file-text", color: "text-muted-foreground" },
+  { name: "cover-reference.png", meta: "880 KB · image", glyph: "file-text", color: "text-emerald-500" },
+];
+---
+<section id="ai" class="relative z-10 py-20 lg:py-28">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
+      <!-- sources panel mock (reverse: visual first on desktop) -->
+      <div class="order-2 overflow-hidden rounded-lg border bg-card shadow-soft-lg lg:order-1">
+        <div class="flex items-center justify-between gap-2 border-b border-border/50 bg-card/60 px-4 py-3 backdrop-blur-md">
+          <span class="flex items-center gap-2"><Icon name="library" class="h-4 w-4 text-primary" /><span class="font-serif text-sm font-bold">Reference Sources</span></span>
+          <span class="text-[11px] text-muted-foreground">4 files · 3.3 MB</span>
+        </div>
+        <div class="flex flex-col gap-1.5 p-3">
+          {sources.map((s) => (
+            <div class="flex items-center gap-2.5 rounded-md border border-border/60 bg-card/75 px-3 py-2.5">
+              <Icon name={s.glyph} class={`h-4 w-4 ${s.color}`} />
+              <span class="min-w-0 flex-1">
+                <span class="block truncate text-[13px] font-medium">{s.name}</span>
+                <span class="block text-[11px] text-muted-foreground">{s.meta}</span>
+              </span>
+              <Icon name="copy" class="h-3.5 w-3.5 text-muted-foreground" />
+            </div>
+          ))}
+        </div>
+        <div class="border-t border-border/50 px-4 py-3">
+          <Badge variant="primary"><Icon name="mic" class="h-3 w-3" />Narration cues stay in mirror docs, out of prose</Badge>
+        </div>
+      </div>
+
+      <div class="order-1 lg:order-2">
+        <SectionHeading eyebrow="AI-assisted author workflow" eyebrowIcon="wand" title="Why AI authors need production systems, not bigger prompts.">
+          Position agents as a strength. When sources, style, and chapters are real files, AI-assisted
+          drafts stay coherent — and every change is something you can see and undo.
+        </SectionHeading>
+
+        <div class="mt-7 grid gap-4 sm:grid-cols-2">
+          {points.map((p) => (
+            <div class="h-full rounded-lg border border-border/60 bg-card/80 p-5 shadow-soft backdrop-blur-sm">
+              <span class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-orange-500/20 text-primary"><Icon name={p.icon} class="h-5 w-5" /></span>
+              <h3 class="font-serif text-base font-semibold">{p.title}</h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

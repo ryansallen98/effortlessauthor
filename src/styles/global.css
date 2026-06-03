@@ -1,0 +1,201 @@
+/*
+ * Marketing site theme — mirrors the sibling app's design system 1:1.
+ * Source of truth: app/src/app/globals.css, app/tailwind.config.ts,
+ * docs/context/branding/theme-variables.md.
+ *
+ * Tailwind v4 (CSS-first). Token values stay as HSL channels (unwrapped) so
+ * the same `hsl(var(--token))` mapping and opacity modifiers as the app work.
+ */
+@import "tailwindcss";
+
+/* Fonts (Crimson Pro + DM Sans) are loaded via <link> in Base.astro head. */
+
+/* Class-based dark mode, mirroring the app's darkMode: ["class"]. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---- Runtime token values (identical to app globals.css) -------------- */
+:root {
+  --background: 40 33% 98%;
+  --foreground: 30 15% 15%;
+  --card: 40 30% 99%;
+  --card-foreground: 30 15% 15%;
+  --popover: 40 30% 99%;
+  --popover-foreground: 30 15% 15%;
+  --primary: 24 85% 45%;
+  --primary-foreground: 40 30% 99%;
+  --secondary: 35 25% 93%;
+  --secondary-foreground: 30 15% 25%;
+  --muted: 35 20% 94%;
+  --muted-foreground: 30 10% 45%;
+  --accent: 35 40% 90%;
+  --accent-foreground: 30 20% 20%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 35 20% 88%;
+  --input: 35 20% 88%;
+  --ring: 24 85% 45%;
+  --radius: 0.625rem;
+  --gradient-start: 35 30% 97%;
+  --gradient-end: 30 25% 94%;
+  --shadow-color: 30 20% 70%;
+}
+
+.dark {
+  --background: 30 15% 8%;
+  --foreground: 35 20% 95%;
+  --card: 30 12% 12%;
+  --card-foreground: 35 20% 95%;
+  --popover: 30 12% 12%;
+  --popover-foreground: 35 20% 95%;
+  --primary: 30 90% 55%;
+  --primary-foreground: 30 15% 8%;
+  --secondary: 30 10% 18%;
+  --secondary-foreground: 35 20% 90%;
+  --muted: 30 10% 18%;
+  --muted-foreground: 35 15% 60%;
+  --accent: 30 15% 22%;
+  --accent-foreground: 35 20% 95%;
+  --destructive: 0 62% 45%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 30 10% 22%;
+  --input: 30 10% 22%;
+  --ring: 30 90% 55%;
+  --gradient-start: 30 12% 10%;
+  --gradient-end: 30 10% 14%;
+  --shadow-color: 30 20% 5%;
+}
+
+/* ---- Tailwind theme mapping (mirrors tailwind.config.ts) -------------- */
+@theme inline {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-serif: 'Crimson Pro', Georgia, serif;
+
+  --shadow-soft: 0 2px 15px -3px hsl(var(--shadow-color) / 0.1),
+    0 4px 6px -4px hsl(var(--shadow-color) / 0.1);
+  --shadow-soft-lg: 0 10px 40px -10px hsl(var(--shadow-color) / 0.15),
+    0 4px 6px -4px hsl(var(--shadow-color) / 0.1);
+  --shadow-inner-soft: inset 0 2px 4px 0 hsl(var(--shadow-color) / 0.05);
+
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
+  --animate-slide-up: slideUp 0.5s ease-out forwards;
+  --animate-scale-in: scaleIn 0.3s ease-out forwards;
+}
+
+/* ---- Base (mirrors app globals.css @layer base) ----------------------- */
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    overflow-x: clip; /* safety net against incidental horizontal overflow */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  h1 { font-size: 2.25rem; font-weight: 700; line-height: 1.15; }
+  h2 { font-size: 1.5rem; font-weight: 600; line-height: 1.3; }
+  h3 { font-size: 1.25rem; font-weight: 600; }
+
+  p { line-height: 1.65; text-wrap: pretty; }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.2);
+    color: hsl(var(--foreground));
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
+  }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: hsl(var(--muted) / 0.3); }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--muted-foreground) / 0.2); border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.3); }
+}
+
+/* ---- Custom utilities (mirror app helpers) ---------------------------- */
+@utility bg-gradient-warm {
+  background-image: linear-gradient(
+    135deg,
+    hsl(var(--gradient-start)),
+    hsl(var(--gradient-end))
+  );
+}
+
+@utility text-gradient {
+  background-image: linear-gradient(90deg, hsl(var(--primary)), var(--color-orange-600));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Subtle grain overlay — identical SVG noise + opacity to the app. */
+.texture-grain { position: relative; }
+.texture-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.015;
+  pointer-events: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

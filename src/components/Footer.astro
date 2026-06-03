@@ -1,0 +1,38 @@
+---
+import BrandLockup from "./BrandLockup.astro";
+
+const cols = [
+  { title: "Product", links: ["File-first workflow", "KDP pipeline", "Metadata prep", "EPUB export", "Audio rendering"] },
+  { title: "Resources", links: ["Markdown to KDP EPUB", "Structuring a nonfiction book", "nav.xhtml vs toc.ncx", "Keeping a manuscript in Git"] },
+  { title: "Company", links: ["Early access", "Request a demo", "Launch updates"] },
+];
+---
+<footer class="relative z-10 border-t border-border/50 bg-card/40 backdrop-blur-sm">
+  <div class="mx-auto max-w-7xl px-6 py-14 lg:px-8">
+    <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div>
+        <BrandLockup />
+        <p class="mt-4 max-w-xs text-sm text-muted-foreground">
+          A file-first authoring studio for Kindle-ready books. Your manuscript stays as real Markdown files you own.
+        </p>
+      </div>
+      {cols.map((c) => (
+        <div>
+          <h3 class="font-serif text-base font-semibold">{c.title}</h3>
+          <ul class="mt-3 flex flex-col gap-2">
+            {c.links.map((l) => (
+              <li><a href="#early-access" class="text-sm text-muted-foreground transition-colors hover:text-foreground">{l}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 flex flex-col items-start justify-between gap-3 border-t border-border/50 pt-6 text-sm text-muted-foreground sm:flex-row sm:items-center">
+      <p>© 2026 EffortlessAuthor. Crafted for authors.</p>
+      <p class="max-w-md text-xs">
+        Product naming (EffortlessAuthor / EasyEnochian) is not yet finalized for public launch.
+      </p>
+    </div>
+  </div>
+</footer>

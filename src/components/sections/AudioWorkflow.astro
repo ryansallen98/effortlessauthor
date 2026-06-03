@@ -1,0 +1,42 @@
+---
+import Icon from "../Icon.astro";
+import SectionHeading from "../SectionHeading.astro";
+import AudioMock from "../mocks/AudioMock.astro";
+
+const points = [
+  { icon: "volume2", title: "Chapter & full-book audio", body: "Render narration per chapter or stitch the whole book — rebuilt from the same source after every change." },
+  { icon: "users", title: "Voice casting & pacing", body: "Per-character voice maps and pause cues let you shape how the book is read aloud." },
+  { icon: "refresh-cw", title: "Review before final render", body: "A render-and-review loop keeps you in control — flag chapters that need another pass." },
+];
+---
+<section id="audio" class="relative z-10 border-y border-border/50 bg-card/30 py-20 backdrop-blur-sm lg:py-28">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="grid items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+      <div>
+        <SectionHeading eyebrow="Audio workflow" eyebrowIcon="volume2" title="Make audio a structured workflow.">
+          Audio is part of the project, not a separate tool. Generate narration from the same files,
+          cast voices, set pacing, and review chapter by chapter before the final render.
+        </SectionHeading>
+
+        <div class="mt-7 flex flex-col gap-4">
+          {points.map((p) => (
+            <div class="flex gap-4 rounded-lg border border-border/60 bg-card/80 p-4 shadow-soft backdrop-blur-sm">
+              <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-orange-500/20 text-primary"><Icon name={p.icon} class="h-5 w-5" /></span>
+              <span>
+                <h3 class="font-serif text-base font-semibold">{p.title}</h3>
+                <p class="mt-1 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <p class="mt-6 max-w-md text-sm text-muted-foreground">
+          Narration is generated audio for review and playback — we don't claim finished professional
+          audiobook production.
+        </p>
+      </div>
+
+      <div><AudioMock /></div>
+    </div>
+  </div>
+</section>

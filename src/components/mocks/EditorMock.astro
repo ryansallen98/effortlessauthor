@@ -1,0 +1,117 @@
+---
+/**
+ * Recreation of the BookEditor surface (app/src/components/editor/BookEditor.tsx):
+ * h-16 app bar, w-72 file tree, split Markdown + preview panes, h-9 status bar.
+ * Built from the same theme tokens and component shapes — not a generic mockup.
+ */
+import Icon from "../Icon.astro";
+import Button from "../ui/Button.astro";
+import Badge from "../ui/Badge.astro";
+
+const tree = [
+  { icon: "chevron-down", glyph: "folder-open", label: "front-matter", indent: false },
+  { icon: null, glyph: "file-text", label: "title-page.md", indent: true },
+  { icon: "chevron-down", glyph: "folder-open", label: "content", indent: false },
+  { icon: null, glyph: "file-text", label: "01-introduction.md", indent: true },
+  { icon: null, glyph: "file-text", label: "02-the-aethyrs.md", indent: true },
+  { icon: null, glyph: "file-text", label: "03-first-key.md", indent: true, active: true },
+  { icon: null, glyph: "file-text", label: "04-second-key.md", indent: true },
+  { icon: "chevron-right", glyph: "folder", label: "back-matter", indent: false },
+];
+---
+<div class="overflow-hidden rounded-lg border bg-card shadow-soft-lg" role="img" aria-label="EffortlessAuthor editor: file tree, Markdown manuscript, and live preview">
+  <!-- window chrome -->
+  <div class="flex h-9 items-center gap-2.5 border-b border-border/70 bg-muted/50 px-3.5">
+    <span class="flex gap-1.5">
+      <span class="h-2.5 w-2.5 rounded-full bg-destructive/45"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-amber-500/55"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-emerald-500/50"></span>
+    </span>
+    <span class="flex-1 truncate text-center font-mono text-[11px] text-muted-foreground">the-enochian-keys / content / 03-first-key.md</span>
+  </div>
+
+  <!-- app bar -->
+  <div class="flex h-13 items-center justify-between gap-3 border-b border-border/50 bg-card/60 px-3.5 py-2 backdrop-blur-md">
+    <div class="flex min-w-0 items-center gap-2.5">
+      <span class="flex h-7 w-7 items-center justify-center rounded-md border border-border bg-background text-muted-foreground"><Icon name="arrow-left" class="h-3.5 w-3.5" /></span>
+      <span class="min-w-0">
+        <span class="block truncate font-serif text-sm font-bold leading-tight">The Enochian Keys</span>
+        <span class="block text-[11px] text-muted-foreground">by A. Dee · 12,480 words</span>
+      </span>
+    </div>
+    <div class="flex items-center gap-2">
+      <Badge variant="amber" class="hidden sm:inline-flex"><span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>Unsaved</Badge>
+      <span class="hidden h-7 w-7 items-center justify-center rounded-md border border-border bg-background text-muted-foreground sm:flex"><Icon name="save" class="h-3.5 w-3.5" /></span>
+      <span class="hidden h-7 w-7 items-center justify-center rounded-md border border-border bg-background text-muted-foreground sm:flex"><Icon name="eye" class="h-3.5 w-3.5" /></span>
+      <Button variant="gradient" size="sm" class="h-7 gap-1.5 px-2.5 text-xs"><Icon name="file-down" class="h-3.5 w-3.5" />Export EPUB</Button>
+    </div>
+  </div>
+
+  <!-- body -->
+  <div class="grid min-h-[18rem] grid-cols-[8.5rem_1fr] md:grid-cols-[11rem_1fr_1fr]">
+    <!-- file tree -->
+    <aside class="border-r border-border/60 bg-card/40 p-2.5">
+      <div class="flex items-center justify-between px-1 pb-2">
+        <span class="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-muted-foreground"><Icon name="sparkles" class="h-3 w-3" />Files</span>
+        <Icon name="plus" class="h-3.5 w-3.5 text-muted-foreground" />
+      </div>
+      <div class="flex flex-col gap-0.5">
+        {tree.map((n) => (
+          <div class={`flex items-center gap-1.5 rounded-sm px-2 py-1.5 text-[13px] ${n.indent ? "ml-3" : ""} ${n.active ? "bg-accent font-semibold text-accent-foreground" : "text-foreground"}`}>
+            {n.icon && <Icon name={n.icon} class="h-3.5 w-3.5 text-muted-foreground" />}
+            <Icon name={n.glyph} class={`h-3.5 w-3.5 ${n.glyph.startsWith("folder") ? "text-blue-500" : "text-muted-foreground"}`} />
+            <span class="truncate">{n.label}</span>
+          </div>
+        ))}
+      </div>
+    </aside>
+
+    <!-- markdown source -->
+    <div class="min-w-0 border-r border-border/60">
+      <div class="flex gap-1.5 border-b border-border/50 bg-muted/50 px-3 py-2">
+        <Badge variant="mono">title: First Key</Badge>
+        <Badge variant="mono">type: chapter</Badge>
+      </div>
+      <div class="overflow-hidden p-4 font-mono text-xs leading-7 text-foreground">
+        <div><span class="font-semibold text-primary"># The First Key</span></div>
+        <div>&nbsp;</div>
+        <div>The first call governs the <span class="font-bold">**element of spirit**</span>,</div>
+        <div>spoken to open the gate of the thirty Aethyrs.</div>
+        <div>&nbsp;</div>
+        <div class="text-muted-foreground">&gt; "Ol sonuf vaoresaji, gohu IAD Balata."</div>
+        <div>&nbsp;</div>
+        <div><span class="font-semibold text-primary">## Pronunciation</span></div>
+        <div>&nbsp;</div>
+        <div>- Sustain each vowel one full beat</div>
+        <div>- Treat <span class="font-bold">**ZIRDO**</span> as three syllables</div>
+      </div>
+    </div>
+
+    <!-- live preview -->
+    <div class="hidden min-w-0 md:block">
+      <div class="flex items-center gap-1.5 border-b border-border/50 bg-muted/30 px-3 py-2 text-[11px] text-muted-foreground"><Icon name="eye" class="h-3 w-3" />Live preview</div>
+      <div class="px-5 py-4">
+        <h4 class="font-serif text-[17px] font-bold">The First Key</h4>
+        <p class="mt-2 text-[13px] leading-relaxed text-foreground/85">
+          <span class="float-left pr-1.5 font-serif text-4xl font-bold leading-none text-primary">T</span>
+          he first call governs the <strong>element of spirit</strong>, spoken to open the gate of the thirty Aethyrs.
+        </p>
+        <p class="mt-2 text-[13px] italic text-muted-foreground">"Ol sonuf vaoresaji, gohu IAD Balata."</p>
+        <div class="mt-3 flex flex-col gap-2">
+          <span class="h-2 w-[90%] rounded-full bg-muted-foreground/15"></span>
+          <span class="h-2 w-[80%] rounded-full bg-muted-foreground/15"></span>
+          <span class="h-2 w-[55%] rounded-full bg-muted-foreground/15"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- status bar -->
+  <div class="flex h-9 items-center justify-between border-t border-border/50 bg-muted/40 px-3.5 text-[11px] text-muted-foreground">
+    <span class="font-mono">content/03-first-key.md</span>
+    <span class="flex items-center gap-3">
+      <span>1,204 words</span>
+      <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-emerald-500"></span>KDP Ready</span>
+    </span>
+  </div>
+</div>

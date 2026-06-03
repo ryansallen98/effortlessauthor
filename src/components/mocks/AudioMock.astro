@@ -1,0 +1,69 @@
+---
+/**
+ * Recreation of the Book Home audio workflow (app/src/components/book-home/BookHome.tsx):
+ * full-book render control + per-chapter render/review rows. Audio is framed as a
+ * structured render/review workflow, never "professional audiobook production".
+ */
+import Icon from "../Icon.astro";
+import Button from "../ui/Button.astro";
+import Badge from "../ui/Badge.astro";
+
+const chapters = [
+  { n: "01", title: "Introduction", status: "Rendered", chars: "8,210 chars", review: false, ready: true },
+  { n: "02", title: "The Aethyrs", status: "Rendered", chars: "11,540 chars", review: false, ready: true },
+  { n: "03", title: "The First Key", status: "Review voices", chars: "9,980 chars", review: true, ready: false },
+  { n: "04", title: "The Second Key", status: "Not rendered", chars: "10,120 chars", review: false, ready: false },
+];
+---
+<div class="overflow-hidden rounded-lg border bg-card shadow-soft-lg" role="img" aria-label="Chapter audio render and review workflow">
+  <!-- full book render bar -->
+  <div class="flex flex-wrap items-center justify-between gap-3 border-b border-border/50 bg-card/60 px-4 py-3.5 backdrop-blur-md">
+    <span class="flex items-center gap-2.5">
+      <span class="flex h-9 w-9 items-center justify-center rounded-md bg-gradient-to-br from-primary/20 to-orange-500/20 text-primary"><Icon name="volume2" class="h-4 w-4" /></span>
+      <span>
+        <span class="block font-serif text-sm font-bold leading-tight">Full book audio</span>
+        <span class="block text-[11px] text-muted-foreground">Voice: Aria · MP3 · rebuilt after every render</span>
+      </span>
+    </span>
+    <Button variant="gradient" size="sm"><Icon name="sparkles" class="h-4 w-4" />Render All Chapters</Button>
+  </div>
+
+  <!-- progress -->
+  <div class="border-b border-border/50 px-4 py-3">
+    <div class="mb-1.5 flex items-center justify-between text-[11px] text-muted-foreground">
+      <span class="inline-flex items-center gap-1.5"><Icon name="refresh-cw" class="h-3 w-3" />Rendering chapter audio</span>
+      <span>2 of 4</span>
+    </div>
+    <div class="h-2 overflow-hidden rounded-full bg-muted">
+      <span class="block h-full w-1/2 rounded-full bg-gradient-to-r from-primary to-orange-600"></span>
+    </div>
+  </div>
+
+  <!-- chapter rows -->
+  <div class="flex flex-col gap-2 p-4">
+    <div class="flex items-center justify-between">
+      <span class="font-serif text-sm font-bold">Chapter Audio</span>
+      <span class="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground"><Icon name="refresh-cw" class="h-3 w-3" />Refresh</span>
+    </div>
+    {chapters.map((c) => (
+      <div class="flex items-center gap-3 rounded-md border border-border/60 bg-card/75 p-3">
+        <span class="rounded-sm bg-muted px-1.5 py-1 font-mono text-[11px] text-muted-foreground">{c.n}</span>
+        <span class="min-w-0 flex-1">
+          <span class="flex items-center gap-2 text-[13px] font-semibold">
+            <span class="truncate">{c.title}</span>
+            {c.review && <Badge variant="amber">review voices</Badge>}
+          </span>
+          <span class="mt-0.5 block text-[11px] text-muted-foreground">{c.status} · {c.chars}</span>
+        </span>
+        {c.ready ? (
+          <span class="hidden h-1.5 w-20 overflow-hidden rounded-full bg-muted sm:block"><span class="block h-full w-2/5 bg-primary/60"></span></span>
+        ) : null}
+        {c.ready ? (
+          <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary"><Icon name="play" class="h-3.5 w-3.5" /></span>
+        ) : (
+          <span class="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-background text-muted-foreground"><Icon name="rotate-cw" class="h-3.5 w-3.5" /></span>
+        )}
+      </div>
+    ))}
+  </div>
+</div>

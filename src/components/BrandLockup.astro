@@ -1,0 +1,26 @@
+---
+/**
+ * Feather + sparkle brand lockup — mirrors app/src/app/page.tsx header exactly.
+ * `size="sm"` is the compact nav variant.
+ */
+import Icon from "./Icon.astro";
+interface Props { showText?: boolean; size?: "sm" | "default"; }
+const { showText = true, size = "default" } = Astro.props;
+const sm = size === "sm";
+---
+<span class="flex items-center gap-3">
+  <span class="relative">
+    <span class={`flex items-center justify-center rounded-xl bg-gradient-to-br from-primary to-orange-600 text-primary-foreground shadow-soft ${sm ? "h-10 w-10" : "h-12 w-12"}`}>
+      <Icon name="feather" class={sm ? "h-5 w-5" : "h-6 w-6"} />
+    </span>
+    <span class="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-400 shadow-sm">
+      <Icon name="sparkles" class="h-3 w-3 text-amber-900" />
+    </span>
+  </span>
+  {showText && (
+    <span class="leading-tight">
+      <span class={`block font-serif font-bold tracking-tight text-gradient ${sm ? "text-lg" : "text-2xl"}`}>EffortlessAuthor</span>
+      <span class="block text-sm font-medium text-muted-foreground">KDP Authoring Studio</span>
+    </span>
+  )}
+</span>

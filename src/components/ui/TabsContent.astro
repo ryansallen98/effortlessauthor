@@ -1,0 +1,21 @@
+---
+/**
+ * Astro mirror of app/src/components/ui/tabs.tsx (TabsContent).
+ * `value` ties it to a TabsTrigger; `active` controls initial visibility.
+ */
+import { cn } from "@/lib/utils";
+interface Props { class?: string; active?: boolean; value?: string; [key: string]: unknown; }
+const { class: className, active = false, value, ...rest } = Astro.props;
+---
+<div
+  role="tabpanel"
+  data-tab-panel={value}
+  hidden={!active}
+  class={cn(
+    "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+    className
+  )}
+  {...rest}
+>
+  <slot />
+</div>

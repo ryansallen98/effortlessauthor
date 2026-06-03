@@ -122,3 +122,13 @@ The website should not import runtime code from the sibling app unless the repo 
 - Link every intentional website divergence back to this guide.
 
 If the website adopts React islands or a component library, use shadcn/Radix-compatible primitives that preserve the same classes and states as the app.
+
+## Implementation Status (landing page)
+
+The marketing landing page (`src/pages/index.astro`) is built and follows this guide. Key decisions:
+
+- **Styling stack:** Tailwind CSS v4 via `@tailwindcss/vite` (configured in `astro.config.mjs`). The app's exact tokens are ported into `src/styles/global.css` using a CSS-first `@theme` block (semantic colors mapped to the same `hsl(var(--token))` channels, `--radius` scale, `shadow-soft`/`shadow-soft-lg`/`shadow-inner-soft`, `animate-*`). Class-based dark mode is wired via `@custom-variant dark`. `bg-gradient-warm`, `text-gradient`, and `texture-grain` are recreated as custom utilities. Fonts (Crimson Pro + DM Sans) load via `<link>` in `src/layouts/Base.astro`.
+- **Component mirrors:** shadcn primitives are vendored as Astro components in `src/components/ui/` (`Button`, `Card*`, `Tabs*`, `Input`, `Label`, `Textarea`, `Badge`) with the same base classes/variants as `app/src/components/ui/*`. A `cn()` helper mirrors `app/src/lib/utils.ts` (`src/lib/utils.ts`). `Button` adds a `gradient` variant for the app's primary-CTA override and renders `<a>` when given `href`. Tabs are static-friendly with a small vanilla controller for the product preview.
+- **Product surfaces, not templates:** Hero, product tabs, KDP pipeline, AI workflow, and audio sections use recreated app surfaces (`src/components/mocks/`: editor, dashboard, KDP metadata, export validation, audio) built from the real theme tokens and component shapes. Lucide glyphs are inlined in `src/components/Icon.astro`.
+- **Identity & copy:** Uses the current app identity (EffortlessAuthor / KDP Authoring Studio). Public naming (EffortlessAuthor vs EasyEnochian) is left unresolved with a footer disclaimer. Copy uses "KDP-aware"/"KDP-oriented" only, avoids guaranteed-approval/cloud-security/collaboration/pricing claims, frames audio as a render/review workflow, and uses a low-commitment early-access CTA. All book titles/metadata are fictional demo data (no real titles used).
+- **Responsive:** Verified at 320/375 (true device emulation) and 1280px — no horizontal overflow; UI mockups use stable dimensions and the editor preview pane collapses below `md`.

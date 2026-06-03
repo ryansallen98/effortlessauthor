@@ -1,0 +1,69 @@
+---
+import Icon from "../Icon.astro";
+import SectionHeading from "../SectionHeading.astro";
+import TabsList from "../ui/TabsList.astro";
+import TabsTrigger from "../ui/TabsTrigger.astro";
+import TabsContent from "../ui/TabsContent.astro";
+import DashboardMock from "../mocks/DashboardMock.astro";
+import EditorMock from "../mocks/EditorMock.astro";
+import MetadataMock from "../mocks/MetadataMock.astro";
+import ExportMock from "../mocks/ExportMock.astro";
+import AudioMock from "../mocks/AudioMock.astro";
+
+const tabs = [
+  { value: "library", label: "Library", icon: "book-open" },
+  { value: "editor", label: "Editor", icon: "file-text" },
+  { value: "metadata", label: "Metadata", icon: "tag" },
+  { value: "export", label: "Export", icon: "shield-check" },
+  { value: "audio", label: "Audio", icon: "volume2" },
+];
+---
+<section id="product" class="relative z-10 py-20 lg:py-28">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <SectionHeading center eyebrow="The product" eyebrowIcon="layers" title="One studio, every surface of the book.">
+      Dashboard, editor, metadata, export validation, and audio are the real product — not
+      decoration. Switch between the surfaces that carry a book from draft to KDP-ready export.
+    </SectionHeading>
+
+    <div class="mt-10" data-tabs>
+      <div class="flex justify-center">
+        <TabsList class="flex h-auto w-full max-w-2xl flex-wrap justify-center gap-1">
+          {tabs.map((t, i) => (
+            <TabsTrigger value={t.value} active={i === 0} class="flex-1 gap-1.5">
+              <Icon name={t.icon} class="h-4 w-4" /><span>{t.label}</span>
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </div>
+
+      <div class="mx-auto mt-8 max-w-4xl">
+        <TabsContent value="library" active><DashboardMock /></TabsContent>
+        <TabsContent value="editor"><EditorMock /></TabsContent>
+        <TabsContent value="metadata"><MetadataMock /></TabsContent>
+        <TabsContent value="export"><ExportMock /></TabsContent>
+        <TabsContent value="audio"><AudioMock /></TabsContent>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Lightweight tab controller mirroring Radix Tabs behaviour for the static mocks.
+  document.querySelectorAll<HTMLElement>("[data-tabs]").forEach((root) => {
+    const triggers = root.querySelectorAll<HTMLButtonElement>("[data-tab]");
+    const panels = root.querySelectorAll<HTMLElement>("[data-tab-panel]");
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const value = trigger.dataset.tab;
+        triggers.forEach((t) => {
+          const active = t === trigger;
+          t.dataset.state = active ? "active" : "inactive";
+          t.setAttribute("aria-selected", String(active));
+        });
+        panels.forEach((p) => {
+          p.hidden = p.dataset.tabPanel !== value;
+        });
+      });
+    });
+  });
+</script>

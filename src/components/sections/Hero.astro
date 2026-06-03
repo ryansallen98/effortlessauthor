@@ -1,0 +1,58 @@
+---
+import Icon from "../Icon.astro";
+import Button from "../ui/Button.astro";
+import Badge from "../ui/Badge.astro";
+import EditorMock from "../mocks/EditorMock.astro";
+
+const stats = [
+  { label: "Markdown-first", icon: "file-text" },
+  { label: "EPUB export", icon: "file-down" },
+  { label: "Narrated audio", icon: "volume2" },
+];
+---
+<section id="top" class="relative overflow-hidden">
+  <!-- subtle, justified ambience (matches app decorative glow) -->
+  <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+    <div class="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-primary/5 blur-3xl"></div>
+    <div class="absolute -left-24 top-1/2 h-72 w-72 rounded-full bg-orange-500/5 blur-3xl"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-7xl px-6 pb-16 pt-16 lg:px-8 lg:pb-24 lg:pt-24">
+    <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
+      <!-- copy -->
+      <div class="min-w-0 animate-fade-in">
+        <Badge variant="outline" class="mb-5">
+          <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+          KDP Authoring Studio · early access
+        </Badge>
+        <h1 class="font-serif text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
+          A file-first studio for <span class="text-gradient">Kindle-ready</span> books.
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+          Keep every chapter, style guide, source, cover, and export in a transparent project folder.
+          EffortlessAuthor gives you a structured editor, KDP-aware validation, metadata prep, EPUB
+          export, version history, and narrated audio — from one source of truth.
+        </p>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button href="#early-access" variant="gradient" size="lg">Join the early access list<Icon name="arrow-right" class="h-4 w-4" /></Button>
+          <Button href="#product" variant="outline" size="lg"><Icon name="eye" class="h-4 w-4" />See the workflow</Button>
+        </div>
+
+        <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+          {stats.map((s) => (
+            <span class="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground">
+              <span class="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-primary/20 to-orange-500/20 text-primary"><Icon name={s.icon} class="h-3.5 w-3.5" /></span>
+              {s.label}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- product visual -->
+      <div class="min-w-0 animate-slide-up lg:pl-4">
+        <EditorMock />
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,74 @@
+---
+import Icon from "../Icon.astro";
+import SectionHeading from "../SectionHeading.astro";
+import Badge from "../ui/Badge.astro";
+
+// EPUB package the app assembles. Wording: "KDP-aware", never "guaranteed".
+const epub = [
+  { name: "mimetype", glyph: "file-code" },
+  { name: "META-INF/container.xml", glyph: "file-code" },
+  { name: "OEBPS/content.opf", glyph: "file-code", note: "package + manifest" },
+  { name: "OEBPS/nav.xhtml", glyph: "file-code", note: "navigation" },
+  { name: "OEBPS/toc.ncx", glyph: "file-code", note: "legacy fallback" },
+  { name: "OEBPS/text/", glyph: "folder", note: "strict XHTML" },
+  { name: "OEBPS/styles/kdp.css", glyph: "file-code", note: "KDP-safe CSS" },
+  { name: "OEBPS/images/cover.jpg", glyph: "file-text", note: "cover" },
+];
+
+const prepares = [
+  "Strict XHTML content documents",
+  "KDP-safe CSS handling",
+  "OPF package + manifest",
+  "nav.xhtml + legacy toc.ncx",
+  "Cover handling",
+  "Metadata fields",
+  "Keyword + description constraints",
+  "Validation report before export",
+];
+---
+<section id="kdp" class="relative z-10 border-y border-border/50 bg-card/30 py-20 backdrop-blur-sm lg:py-28">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
+      <div>
+        <SectionHeading eyebrow="KDP-ready pipeline" eyebrowIcon="shield-check" title="Build for KDP from the first draft.">
+          KDP formatting shouldn't be a late-stage surprise. EffortlessAuthor assembles a clean,
+          KDP-aware EPUB and runs a validation report so you catch issues before you upload.
+        </SectionHeading>
+
+        <ul class="mt-7 grid gap-2.5 sm:grid-cols-2">
+          {prepares.map((p) => (
+            <li class="flex items-start gap-2.5 text-[15px]">
+              <span class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary/12 text-primary"><Icon name="check" class="h-3 w-3" /></span>
+              <span class="text-muted-foreground">{p}</span>
+            </li>
+          ))}
+        </ul>
+
+        <p class="mt-6 max-w-md text-sm text-muted-foreground">
+          We say <span class="font-medium text-foreground">KDP-aware</span>, not "guaranteed approval" —
+          the pipeline prepares the artifacts KDP expects and flags what needs review.
+        </p>
+      </div>
+
+      <!-- EPUB package mock -->
+      <div class="overflow-hidden rounded-lg border bg-card shadow-soft-lg">
+        <div class="flex items-center justify-between gap-2 border-b border-border/50 bg-muted/40 px-4 py-2.5">
+          <span class="flex items-center gap-2"><Icon name="package" class="h-4 w-4 text-primary" /><span class="font-mono text-xs text-muted-foreground">the-enochian-keys.epub</span></span>
+          <Badge variant="emerald"><span class="h-2 w-2 rounded-full bg-emerald-500"></span>valid</Badge>
+        </div>
+        <div class="flex flex-col gap-0.5 p-3">
+          {epub.map((e) => (
+            <div class="flex items-center gap-2.5 rounded-sm px-2 py-1.5">
+              <Icon name={e.glyph} class={`h-4 w-4 ${e.glyph === "folder" ? "text-blue-500" : "text-muted-foreground"}`} />
+              <span class="font-mono text-[13px]">{e.name}</span>
+              {e.note && <span class="ml-auto text-[11px] text-muted-foreground">{e.note}</span>}
+            </div>
+          ))}
+        </div>
+        <div class="border-t border-border/50 px-4 py-3 text-[11px] text-muted-foreground">
+          Generated from <span class="font-mono">content/</span> + <span class="font-mono">book.json</span> on every export
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

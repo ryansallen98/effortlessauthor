@@ -1,0 +1,25 @@
+---
+/**
+ * Pill / badge component derived from the app's documented badge patterns
+ * (docs/context/branding/ui-component-alignment.md "Badges, Pills, And Chips").
+ * The app applies these inline; this consolidates the same class strings.
+ */
+import { cn } from "@/lib/utils";
+
+type Variant = "primary" | "mono" | "amber" | "emerald" | "outline";
+interface Props { class?: string; variant?: Variant; [key: string]: unknown; }
+const { class: className, variant = "primary", ...rest } = Astro.props;
+
+const variants: Record<Variant, string> = {
+  primary:
+    "inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary",
+  mono: "inline-flex items-center rounded bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground",
+  amber:
+    "inline-flex items-center gap-1 rounded bg-amber-500/15 px-2 py-0.5 text-xs font-medium text-amber-600 dark:text-amber-400",
+  emerald:
+    "inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-600 dark:text-emerald-400",
+  outline:
+    "inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-background/80 px-2.5 py-1 text-xs font-medium",
+};
+---
+<span class={cn(variants[variant], className)} {...rest}><slot /></span>

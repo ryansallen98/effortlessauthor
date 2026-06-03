@@ -1,0 +1,61 @@
+---
+import Icon from "../Icon.astro";
+import SectionHeading from "../SectionHeading.astro";
+
+const folder = [
+  { name: "book.json", note: "metadata + KDP fields", glyph: "file-code", depth: 0 },
+  { name: "content/", note: "chapters as Markdown", glyph: "folder", depth: 0 },
+  { name: "01-introduction.md", note: "", glyph: "file-text", depth: 1 },
+  { name: "02-the-aethyrs.md", note: "", glyph: "file-text", depth: 1 },
+  { name: "assets/", note: "cover + images", glyph: "folder", depth: 0 },
+  { name: "sources/", note: "research + references", glyph: "folder", depth: 0 },
+  { name: "style.md", note: "style guide", glyph: "file-text", depth: 0 },
+  { name: "styles/custom.css", note: "KDP-safe overrides", glyph: "file-code", depth: 0 },
+  { name: "exports/", note: "generated EPUBs", glyph: "folder", depth: 0 },
+];
+
+const points = [
+  { icon: "folder-open", title: "Own the manuscript", body: "Real files on disk in a transparent project folder — no opaque database, no lock-in." },
+  { icon: "file-text", title: "Markdown-first", body: "Every chapter is plain, inspectable Markdown you can read, diff, and move." },
+  { icon: "git-branch", title: "Git-friendly", body: "A book behaves like a repository, so changes are reviewable and portable." },
+  { icon: "history", title: "Version history", body: "SQLite-backed snapshots protect edits — history without database lock-in." },
+];
+---
+<section id="workflow" class="relative z-10 py-20 lg:py-28">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <SectionHeading eyebrow="File-first workflow" eyebrowIcon="folder-open" title="A book should be a repository, not a document.">
+      Open the project folder and everything is right where you left it — chapters, sources, style
+      guide, cover, and exports. The app reads and writes the same files you can see.
+    </SectionHeading>
+
+    <div class="mt-12 grid items-start gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14">
+      <!-- folder mock -->
+      <div class="overflow-hidden rounded-lg border bg-card shadow-soft-lg">
+        <div class="flex items-center gap-2 border-b border-border/50 bg-muted/40 px-4 py-2.5">
+          <Icon name="folder-open" class="h-4 w-4 text-primary" />
+          <span class="font-mono text-xs text-muted-foreground">the-enochian-keys/</span>
+        </div>
+        <div class="flex flex-col gap-0.5 p-3">
+          {folder.map((f) => (
+            <div class={`flex items-center gap-2.5 rounded-sm px-2 py-1.5 ${f.depth ? "ml-5" : ""}`}>
+              <Icon name={f.glyph} class={`h-4 w-4 ${f.glyph === "folder" ? "text-blue-500" : "text-muted-foreground"}`} />
+              <span class="font-mono text-[13px]">{f.name}</span>
+              {f.note && <span class="ml-auto text-[11px] text-muted-foreground">{f.note}</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- points -->
+      <div class="grid gap-4 sm:grid-cols-2">
+        {points.map((p) => (
+          <div class="h-full rounded-lg border border-border/60 bg-card/80 p-5 shadow-soft backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-soft-lg">
+            <span class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-orange-500/20 text-primary"><Icon name={p.icon} class="h-5 w-5" /></span>
+            <h3 class="font-serif text-lg font-semibold">{p.title}</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

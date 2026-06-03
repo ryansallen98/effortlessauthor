@@ -1,0 +1,64 @@
+---
+/**
+ * Recreation of the dashboard library (app/src/app/page.tsx + BookCard.tsx):
+ * warm header, brand lockup, New Book CTA, and a grid of book project cards.
+ */
+import Icon from "../Icon.astro";
+import BrandLockup from "../BrandLockup.astro";
+import Button from "../ui/Button.astro";
+import Badge from "../ui/Badge.astro";
+
+const books = [
+  { title: "The Enochian Keys", author: "A. Dee", series: "Aethyr Cycle", pos: "#1", files: 14, kw: ["grimoire", "ritual"] },
+  { title: "Field Notes on Color", author: "M. Reyes", series: null, pos: null, files: 9, kw: ["nonfiction"] },
+  { title: "Shipping Software", author: "D. Okoro", series: "Craft & Ship", pos: "#2", files: 22, kw: ["technical"] },
+];
+---
+<div class="overflow-hidden rounded-lg border bg-card shadow-soft-lg" role="img" aria-label="EffortlessAuthor dashboard with a grid of book projects">
+  <div class="flex h-9 items-center gap-2.5 border-b border-border/70 bg-muted/50 px-3.5">
+    <span class="flex gap-1.5">
+      <span class="h-2.5 w-2.5 rounded-full bg-destructive/45"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-amber-500/55"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-emerald-500/50"></span>
+    </span>
+    <span class="flex-1 truncate text-center font-mono text-[11px] text-muted-foreground">effortlessauthor — library</span>
+  </div>
+
+  <div class="flex items-center justify-between gap-3 border-b border-border/50 bg-card/60 px-4 py-3 backdrop-blur-md">
+    <BrandLockup size="sm" />
+    <Button variant="gradient" size="sm"><Icon name="plus" class="h-4 w-4" />New Book</Button>
+  </div>
+
+  <div class="p-4">
+    <div class="mb-4 flex items-center justify-between">
+      <Badge variant="primary"><Icon name="sparkles" class="h-3 w-3" />Your Books</Badge>
+      <span class="text-xs text-muted-foreground">3 projects</span>
+    </div>
+
+    <div class="grid grid-cols-1 gap-3.5 sm:grid-cols-3">
+      {books.map((b) => (
+        <article class="flex flex-col gap-2.5 rounded-lg border border-border/60 bg-card/80 p-3 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-soft-lg">
+          <div class="relative flex aspect-3/4 flex-col justify-end overflow-hidden rounded-md border border-border/60 p-3 shadow-soft" style="background-image:linear-gradient(135deg,hsl(var(--primary)/0.15),hsl(25_95%_53%/0.1) 50%,hsl(38_92%_50%/0.15))">
+            <span class="absolute inset-y-0 left-0 w-1.5 bg-primary/40"></span>
+            {b.series && (
+              <span class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full border border-border/50 bg-background/90 px-1.5 py-0.5 text-[10px] font-semibold backdrop-blur-sm">
+                <Icon name="library" class="h-2.5 w-2.5 text-primary" />{b.series}
+                <span class="rounded-full bg-primary/10 px-1 text-primary">{b.pos}</span>
+              </span>
+            )}
+            <span class="font-serif text-[15px] font-bold leading-tight">{b.title}</span>
+            <span class="mt-0.5 text-[11px] text-muted-foreground">by {b.author}</span>
+          </div>
+          <div class="flex items-center justify-between text-[11px] text-muted-foreground">
+            <span class="inline-flex items-center gap-1"><Icon name="file-text" class="h-3 w-3" />{b.files} files</span>
+            <span class="inline-flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-emerald-500"></span>Ready</span>
+          </div>
+          <div class="flex flex-wrap gap-1">
+            {b.kw.map((k) => <Badge variant="mono">{k}</Badge>)}
+          </div>
+          <Button variant="gradient" size="sm" class="h-8 w-full text-xs"><Icon name="pencil" class="h-3.5 w-3.5" />Edit<Icon name="arrow-right" class="h-3 w-3" /></Button>
+        </article>
+      ))}
+    </div>
+  </div>
+</div>
