@@ -1,6 +1,7 @@
 // Single source of truth for site navigation, so nav + footer stay in sync
 // and every link resolves to a real route or on-page anchor.
 export const primaryNav = [
+  { href: "/", label: "Home" },
   { href: "/features", label: "Features" },
   { href: "/resources", label: "Resources" },
   { href: "/about", label: "About" },

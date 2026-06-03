@@ -28,13 +28,14 @@ const { title, description, section, readingTime } = entry.data;
       <!-- ===== Sidebar (desktop) ===== -->
       <aside class="hidden lg:block">
         <div class="sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto py-10 pr-2">
-          <nav aria-label="Documentation">
+          <nav aria-label="Documentation" class="flex flex-col gap-1">
             {groups.map((g) => (
-              <div class="mb-6">
-                <p class="mb-2 flex items-center gap-2 px-3 text-xs font-bold uppercase tracking-wide text-muted-foreground">
-                  <Icon name={g.icon} class="h-3.5 w-3.5" />{g.name}
-                </p>
-                <ul class="flex flex-col gap-0.5">
+              <details class="group/sec" open={g.name === entry.data.section}>
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-2 rounded-md px-3 py-2 text-xs font-bold uppercase tracking-wide text-muted-foreground transition-colors marker:content-none hover:text-foreground [&::-webkit-details-marker]:hidden">
+                  <span class="flex items-center gap-2"><Icon name={g.icon} class="h-3.5 w-3.5" />{g.name}</span>
+                  <Icon name="chevron-down" class="h-3.5 w-3.5 transition-transform group-open/sec:rotate-180" />
+                </summary>
+                <ul class="mb-2 mt-1 flex flex-col gap-0.5">
                   {g.items.map((d) => (
                     <li>
                       <a
@@ -50,7 +51,7 @@ const { title, description, section, readingTime } = entry.data;
                     </li>
                   ))}
                 </ul>
-              </div>
+              </details>
             ))}
           </nav>
         </div>
@@ -71,16 +72,19 @@ const { title, description, section, readingTime } = entry.data;
             <span class="flex items-center gap-2"><Icon name="menu" class="h-4 w-4" />Browse docs</span>
             <Icon name="chevron-down" class="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-180" />
           </summary>
-          <div class="border-t border-border/50 px-2 py-3">
+          <div class="flex flex-col gap-1 border-t border-border/50 px-2 py-3">
             {groups.map((g) => (
-              <div class="mb-3">
-                <p class="mb-1 flex items-center gap-2 px-3 text-xs font-bold uppercase tracking-wide text-muted-foreground"><Icon name={g.icon} class="h-3.5 w-3.5" />{g.name}</p>
-                <ul class="flex flex-col gap-0.5">
+              <details class="group/sec" open={g.name === entry.data.section}>
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-2 rounded-md px-3 py-2 text-xs font-bold uppercase tracking-wide text-muted-foreground marker:content-none [&::-webkit-details-marker]:hidden">
+                  <span class="flex items-center gap-2"><Icon name={g.icon} class="h-3.5 w-3.5" />{g.name}</span>
+                  <Icon name="chevron-down" class="h-3.5 w-3.5 transition-transform group-open/sec:rotate-180" />
+                </summary>
+                <ul class="mb-2 mt-1 flex flex-col gap-0.5">
                   {g.items.map((d) => (
                     <li><a href={docHref(d)} class:list={["block rounded-md px-3 py-1.5 text-sm", d.id === entry.id ? "bg-primary/10 font-semibold text-primary" : "text-muted-foreground"]}>{d.data.title}</a></li>
                   ))}
                 </ul>
-              </div>
+              </details>
             ))}
           </div>
         </details>
